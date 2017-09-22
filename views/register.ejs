@@ -1,43 +1,43 @@
-<div class="aw-register-box" style="height:800px">
+<div class="aw-register-box" ng-app="registerApp" ng-controller="registerController">
     <div class="mod-head">
         <h1>注册新用户</h1>
     </div>
     <div class="mod-body">
-        <form class="aw-register-form" action="">
+        <form name="regForm" class="aw-register-form" action="">
             <ul>
                 <li class="alert alert-danger hide error_message text-left">
                     <i class="fa fa-remove"></i><em></em>
                 </li>
                 <li>
-                    <input class="aw-register-name form-control" type="text" name="user_name" placeholder="用户名">
-                    <span class="aw-reg-tips hide aw-reg-err">
+                    <input class="aw-register-name form-control" type="text" name="username" placeholder="用户名" ng-model="formData.username" ng-minlength="5" ng-maxlength="12" ng-pattern="/^[a-zA-Z][a-zA-Z0-9_]{4,11}$/" required>
+                    <span ng-cloak  ng-show="regForm.username.$invalid && !regForm.username.$pristine" class="aw-reg-tips  aw-reg-err">
                         <i class="aw-icon i-err"></i>
                         用户名长度不符合
                     </span>
                 </li>
                 <li>
-                    <input class="aw-register-email form-control" type="text" placeholder="邮箱" name="email">
-                    <span class="aw-reg-tips hide aw-reg-err">
+                    <input class="aw-register-email form-control" type="text" placeholder="邮箱" name="email" ng-model="formData.email" ng-pattern="/^(\w+)(\.\w+)*@(\w+)((\.\w+))+$/" required>
+                    <span ng-cloak ng-show="regForm.email.$invalid && !regForm.email.$pristine" class="aw-reg-tips aw-reg-err">
                         <i class="aw-icon i-err"></i>
                         邮箱格式不正确
                     </span>
                 </li>
                 <li>
-                    <input class="aw-register-pwd form-control" type="password" name="password" placeholder="密码">
-                    <span class="aw-reg-tips hide aw-reg-err">
+                    <input class="aw-register-pwd form-control" type="password" name="password" placeholder="密码" ng-model="formData.password" ng-pattern="/(?!^\\d+$)(?!^[a-zA-Z]+$)(?!^[_#@]+$).{5,}/" ng-maxlength="12" required>
+                    <span ng-cloak ng-show="regForm.password.$invalid && !regForm.password.$pristine" class="aw-reg-tips aw-reg-err">
                         <i class="aw-icon i-err"></i>
                         密码格式不正确
                     </span>
                 </li>
                 <li class="last">
                     <label>
-                        <input type="checkbox" checked="checked" value="agree" name="">我同意
+                        <input type="checkbox" checked="checked" value="agree" name="" required>我同意
                     </label>
                     <a href="#">用户协议</a>
-                    <a href="#" class="pull-right">已有账号</a>
+                    <a href="/login" class="pull-right">已有账号</a>
                 </li>
                 <li class="clearfix">
-                    <button class="btn btn-large btn-blue btn-block">注册</button>
+                    <button type="submit" ng-disabled="regForm.$invalid" class="btn btn-large btn-blue btn-block">注册</button>
                 </li>
             </ul>
         </form>
