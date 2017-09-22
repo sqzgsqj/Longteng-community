@@ -3,14 +3,14 @@
         <h1>注册新用户</h1>
     </div>
     <div class="mod-body">
-        <form name="regForm" class="aw-register-form" action="">
+        <form name="regForm" class="aw-register-form" ng-submit="postForm()">
             <ul>
                 <li class="alert alert-danger hide error_message text-left">
                     <i class="fa fa-remove"></i><em></em>
                 </li>
                 <li>
-                    <input class="aw-register-name form-control" type="text" name="username" placeholder="用户名" ng-model="formData.username" ng-minlength="5" ng-maxlength="12" ng-pattern="/^[a-zA-Z][a-zA-Z0-9_]{4,11}$/" required>
-                    <span ng-cloak  ng-show="regForm.username.$invalid && !regForm.username.$pristine" class="aw-reg-tips  aw-reg-err">
+                    <input class="aw-register-name form-control" type="text" name="name" placeholder="用户名" ng-model="formData.name" ng-minlength="5" ng-maxlength="12" ng-pattern="/^[a-zA-Z][a-zA-Z0-9_]{4,11}$/" required>
+                    <span ng-cloak  ng-show="regForm.name.$invalid && !regForm.name.$pristine" class="aw-reg-tips  aw-reg-err">
                         <i class="aw-icon i-err"></i>
                         用户名长度不符合
                     </span>

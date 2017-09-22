@@ -8,5 +8,7 @@ module.exports = {
     //数据库连接的端口号
     port:27017,
     //数据库的名字
-    db:'ask'
+    db:'ask',
+    //加密的密码
+    psd:'askSystem'
 }
