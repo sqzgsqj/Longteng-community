@@ -1,20 +1,40 @@
-<!DOCTYPE>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title><%= title %></title>
-    <!--加载boostrap前端UI框架-->
-    <link rel="stylesheet" href="/plugins/bootstrap/dist/css/bootstrap.css">
-    <!--加载图标库-->
-    <link rel="stylesheet" href="/plugins/font-awesome/css/font-awesome.css">
-    <!--加载首页的css样式-->
-    <link rel="stylesheet" href="/stylesheets/login.css">
-    <!--加载jquery-->
-    <script src="/plugins/jquery/dist/jquery.js"></script>
-    <!--加载angularJS-->
-    <script src="/plugins/angular/angular.js"></script>
-</head>
-<body>
-
-</body>
-</html>
+<div id="wrapper">
+    <div class="aw-login-box">
+        <div class="mod-body clearfix">
+            <div class="content pull-left">
+                <h1 class="logo"></h1>
+                <h2>基于nodeJS的社区系统</h2>
+                <form id="login_form" method="post">
+                    <ul>
+                        <li>
+                            <input type="text" id="aw-login-user-name" class="form-control" placeholder="邮箱 / 用户名" name="user_name">
+                        </li>
+                        <li>
+                            <input type="password" id="aw-login-user-password" class="form-control" placeholder="密码" name="password" />
+                        </li>
+                        <li class="alert alert-danger hide error_message">
+                            <i class="fa fa-remove"></i><em></em>
+                        </li>
+                        <li class="last">
+                            <a href="javascript:void(0)" class="pull-right btn btn-large btn-primary">登录</a>
+                            <input id="login-radio" type="checkbox" value="1" name="net_auto_login">
+                            <label for="login-radio">记住我</label>
+                            <a href="#">&nbsp;&nbsp;忘记密码</a>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+            <div class="side-bar pull-left">
+                <h3>第三方账号登录</h3>
+                <a href="#" class="btn btn-block btn-weibo"><i class="icon icon-weibo"></i> 新浪微博登录</a>
+                <a href="#" class="btn btn-block btn-qq"> <i class="icon icon-qq"></i> QQ登录</a>
+            </div>
+        </div>
+        <div class="mod-footer">
+            <span>还没有账号?</span>&nbsp;&nbsp;
+            <a href="/register">立即注册</a>&nbsp;&nbsp;•&nbsp;&nbsp;
+            <a href="">游客访问</a>&nbsp;&nbsp;•&nbsp;&nbsp;
+            <a href="#">问答阅读</a>
+        </div>
+    </div>
+</div>

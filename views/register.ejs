@@ -1,20 +1,45 @@
-<!DOCTYPE>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title><%= title %></title>
-    <!--加载boostrap前端UI框架-->
-    <link rel="stylesheet" href="/plugins/bootstrap/dist/css/bootstrap.css">
-    <!--加载图标库-->
-    <link rel="stylesheet" href="/plugins/font-awesome/css/font-awesome.css">
-    <!--加载首页的css样式-->
-    <link rel="stylesheet" href="/stylesheets/register.css">
-    <!--加载jquery-->
-    <script src="/plugins/jquery/dist/jquery.js"></script>
-    <!--加载angularJS-->
-    <script src="/plugins/angular/angular.js"></script>
-</head>
-<body>
-
-</body>
-</html>
+<div class="aw-register-box" style="height:800px">
+    <div class="mod-head">
+        <h1>注册新用户</h1>
+    </div>
+    <div class="mod-body">
+        <form class="aw-register-form" action="">
+            <ul>
+                <li class="alert alert-danger hide error_message text-left">
+                    <i class="fa fa-remove"></i><em></em>
+                </li>
+                <li>
+                    <input class="aw-register-name form-control" type="text" name="user_name" placeholder="用户名">
+                    <span class="aw-reg-tips hide aw-reg-err">
+                        <i class="aw-icon i-err"></i>
+                        用户名长度不符合
+                    </span>
+                </li>
+                <li>
+                    <input class="aw-register-email form-control" type="text" placeholder="邮箱" name="email">
+                    <span class="aw-reg-tips hide aw-reg-err">
+                        <i class="aw-icon i-err"></i>
+                        邮箱格式不正确
+                    </span>
+                </li>
+                <li>
+                    <input class="aw-register-pwd form-control" type="password" name="password" placeholder="密码">
+                    <span class="aw-reg-tips hide aw-reg-err">
+                        <i class="aw-icon i-err"></i>
+                        密码格式不正确
+                    </span>
+                </li>
+                <li class="last">
+                    <label>
+                        <input type="checkbox" checked="checked" value="agree" name="">我同意
+                    </label>
+                    <a href="#">用户协议</a>
+                    <a href="#" class="pull-right">已有账号</a>
+                </li>
+                <li class="clearfix">
+                    <button class="btn btn-large btn-blue btn-block">注册</button>
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>

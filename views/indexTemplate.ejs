@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title><%- title %></title>
+    <!--首先引入bootstrap-->
+    <link rel="stylesheet" href="/plugins/bootstrap/dist/css/bootstrap.min.css">
+    <!--图标-->
+    <link rel="stylesheet" href="/plugins/font-awesome/css/font-awesome.min.css">
+    <!--颜色主题-->
+    <link rel="stylesheet" href="/stylesheets/base.css">
+    <!--再引入我自己的CSS样式-->
+    <link rel="stylesheet" href="/stylesheets/index.css">
+    <!--动态的引入某个页面的静态资源-->
+    <link rel="stylesheet" href="<%= locals.resource %>" />
+    <!--引入jquery-->
+    <script type="text/javascript" src="/plugins/jquery/dist/jquery.min.js"></script>
+    <!--引入bootstrap插件-->
+    <script type="text/javascript" src="/plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!--引入angularJS-->
+    <script type="text/javascript" src="/plugins/angular/angular.min.js"></script>
+    <!--首页的JS文件-->
+    <script type="text/javascript" src="/javascripts/index.js"></script>
+    <!--公共的JS文件-->
+    <script type="text/javascript" src="/javascripts/public.js"></script>
+    <!--angularJS核心启动文件-->
+    <script type="text/javascript" src="/javascripts/app.js"></script>
+    <!--控制器文件-->
+    <script type="text/javascript" src="/javascripts/controller.js"></script>
+    <!--编辑器-->
+    <link rel="stylesheet" href="/plugins/editor/dist/simplemde.min.css">
+    <script type="text/javascript" src="/plugins/editor/dist/simplemde.min.js"></script>
+</head>
+<body>
+<div class="aw-top-menu-wrap">
+    <div class="container">
+        <!--logo-->
+        <div class="aw-logo hidden-xs">
+            <a href="http://localhost:5000"></a>
+        </div>
+        <!--logo-->
+        <!--导航-->
+        <div class="aw-top-nav navbar">
+            <div class="navbar-header">
+                <button class="navbar-toggle pull-left">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <nav role="navigation" class="collapse navbar-collapse bs-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="#" class="active"><i class="fa fa-id-card"></i> 发现</a></li>
+                    <li><a href="#"><i class="fa fa-male"></i> 话题</a></li>
+                </ul>
+            </nav>
+        </div>
+        <!--导航-->
+        <!--登录注册-->
+        <div class="aw-user-nav">
+            <span>
+                <a class="register btn btn-normal btn-success" href="/register">注册</a>
+                <a class="login btn btn-normal btn-primary" href="/login">登录</a>
+            </span>
+        </div>
+    </div>
+</div>
+<%- body %>
+<footer class="footer">
+    <div class="container">
+        <div class="col-sm-6 col-lg-6">
+            <h4>
+                <img src="/images/zhiyou.png">
+            </h4>
+            <p>本网站所有的解释权归智游教育集团,由教学部nodeJS组成员整理,不允许任何人以任何目的进行传播和商业运作</p>
+        </div>
+        <div class="col-sm-6 col-lg-5 col-lg-offset-1">
+            <div class="row about">
+                <div class="col-xs-4">
+                    <h4>关于</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="#">关于我们</a></li>
+                        <li><a href="#">广告合作</a></li>
+                        <li><a href="#">友情链接</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-4">
+                    <h4>联系方式</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="#">联系QQ</a></li>
+                        <li><a href="#">电子邮件</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-4">
+                    <h4>旗下网站</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="http://www.zhiyou100.com">智游集团</a></li>
+                        <li><a href="#">李志远的个人博客</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <ul class="list-inline text-center">
+            <li>本网站的所有权归智游集团教学部nodeJS组成员李志远所有</li>
+        </ul>
+    </div>
+</footer>
+</body>
+</html>
