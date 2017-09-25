@@ -42,4 +42,12 @@
             </ul>
         </form>
     </div>
+    <div class="mod-footer" style="height:40px">
+        <div ng-show="success" id="successbox" class="alert alert-success" role="alert">
+            {{ success }}
+        </div>
+        <div ng-show="error" id="errorbox" class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+    </div>
 </div>

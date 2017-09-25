@@ -8,6 +8,8 @@ const setting = require('../setting');
 const url = require('url');
 //引入加密模块
 const crypto = require('crypto');
+//这句话说明我们使用的promise对象是ES6中原生的promise对象.
+mongoose.Promise = global.Promise;
 //调用模块下面的connect方法去连接数据库
 mongoose.connect(`mongodb://${setting.host}/${setting.db}`,{
     useMongoClient: true,
@@ -58,7 +60,7 @@ const DBSet = {
     encrypt:(data,key)=>{
         //创建了一个加密的对象,第一个参数是指明算法，第二个是指明使用的密码
         let ciplher = crypto.createCipher('bf',key);
-        let newPSD;
+        let newPSD = '';
         newPSD += ciplher.update(data,'utf8','hex');
         newPSD += ciplher.final('hex');
         return newPSD;

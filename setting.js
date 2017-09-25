@@ -10,5 +10,14 @@ module.exports = {
     //数据库的名字
     db:'ask',
     //加密的密码
-    psd:'askSystem'
+    psd:'askSystem',
+    mail_opts:{
+        //邮箱的服务器地址
+        host:'smtp.163.com',
+        //权限授权码
+        auth:{
+            user:'anyanglizhiyuan@163.com',
+            pass:'lizhi123123'
+        }
+    },
 }

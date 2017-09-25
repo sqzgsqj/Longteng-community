@@ -11,6 +11,8 @@ const User = require('../model/User');
 const DBSet = require('../model/db');
 //引入配置文件
 const setting = require('../setting');
+//发送邮件的文件
+const mail = require('../common/mail');
 //首页的处理函数
 exports.index = (req,res,next)=>{
     res.render('index',{
@@ -66,6 +68,11 @@ exports.postRegister = (req,res,next)=>{
                 res.end(error);
             }else{
                 //没重复的情况，允许注册
+                //发送邮件
+                var regMsg = {name:name,email:email};
+                mail.sendEmail('reg_mail',regMsg,(info)=>{
+                    console.log(info);
+                })
                 let newPSD = DBSet.encrypt(password,setting.psd);
                 req.body.password = newPSD;
                 DBSet.addOne(User,req,res,'success');
@@ -74,11 +81,6 @@ exports.postRegister = (req,res,next)=>{
             res.end(err);
         })
     }
-
-
-
-
-
 }
 //登录行为的处理函数
 exports.postLogin = (req,res,next)=>{
