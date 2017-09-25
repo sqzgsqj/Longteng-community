@@ -84,7 +84,56 @@ exports.postRegister = (req,res,next)=>{
 }
 //登录行为的处理函数
 exports.postLogin = (req,res,next)=>{
-
+    let name = req.body.name;
+    let password = req.body.password;
+    let getName; //用用户名登录
+    let getUser; //方法，通过用户名和密码来获取用户的登录信息
+    let getEmail;//用邮箱登录
+    let error;//错误提示
+    name.includes('@') ? getEmail = name : getName = name;
+    //1.判断用户名是否合法
+    if(getName){
+       if(!validator.matches(getName,/^[a-zA-Z][a-zA-Z0-9_]{4,11}$/,'g')){
+           error = '用户名不合法';
+       }
+    }
+    //2.判断邮箱是否合法
+    if(getEmail){
+        if(!validator.isEmail(getEmail)){
+            error = '邮箱格式不正确';
+        }
+    }
+    //3.验证密码
+    if(!validator.matches(password,/(?!^\\d+$)(?!^[a-zA-Z]+$)(?!^[_#@]+$).{5,}/,'g') ||
+        !validator.isLength(password,6,12)){
+        error = '密码不合法,长度在5-12位,请重新输入'
+    }
+    //4.如果验证不成功，直接将错误提示返回，让用户重新填写内容
+    if(error){
+        res.end(error);
+    }else{
+        //验证成功
+        if(getEmail){
+            getUser = User.getUserByEmail
+        }else{
+            getUser = User.getUserByName
+        }
+        getUser(name,(err,user)=>{
+            if(err){
+                res.end(err);
+            }
+            if(!user){
+                res.end('该用户名/邮箱不存在');
+            }
+            //最后一步，比较密码了
+            let newPSD = DBSet.encrypt(password,setting.psd);
+            if(user.password != newPSD){
+                res.end('密码错误,请重新输入');
+            }
+            //正确了，直接返回一个字符串,success
+            res.end('success');
+        })
+    }
 }
 //退出行为的处理函数
 exports.logout = (req,res,next)=>{

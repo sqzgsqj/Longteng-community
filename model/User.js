@@ -64,5 +64,14 @@ const UserSchema = new Schema({
         default:0
     }
 })
+//给这个User表添加静态方法
+UserSchema.statics = {
+    getUserByName:(name,callback)=>{
+        User.findOne({name:name},callback)
+    },
+    getUserByEmail:(email,callback)=>{
+        User.findOne({email:email},callback)
+    }
+}
 const User = mongoose.model('User',UserSchema);
 module.exports = User
