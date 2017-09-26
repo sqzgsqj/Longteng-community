@@ -1,0 +1,66 @@
+<div class="aw-container-wrap">
+    <div class="container">
+        <div class="row">
+            <div class="aw-content-wrap clearfix">
+                <div class="aw-user-setting">
+                    <!--导航-->
+                    <div class="">
+                        <ul class="nav nav-tabs aw-nav-tabs active">
+                            <h2>
+                                <i class="fa fa-cog"></i>&nbsp;用户设置
+                            </h2>
+                        </ul>
+                    </div>
+                    <!--修改内容-->
+                    <div class="tab-content clearfix" style="padding-bottom:150px">
+                        <div class="aw-mod">
+                            <div class="mod-body">
+                                <!--基本信息-->
+                                <div class="aw-mod mod-base">
+                                    <div class="mod-head">
+                                        <h3>基本信息</h3>
+                                    </div>
+                                    <form action="">
+                                        <div class="mod-body">
+                                            <dl>
+                                                <dt>账号:</dt>
+                                                <dd><%= user.name %></dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>邮箱:</dt>
+                                                <dd><%= user.email %></dd>
+                                            </dl>
+                                            <dl>
+                                                <dt><label>个性签名:</label></dt>
+                                                <dd class="introduce">
+                                                    <input class="form-control" type="text" value="<%= user.motto %>">
+                                                </dd>
+                                            </dl>
+                                            <div class="side-bar">
+                                                <dl>
+                                                    <dt class="pull-left">
+                                                        <img class="aw-border-radius-5" src="<%= user.avatar %>">
+                                                    </dt>
+                                                    <dd class="pull-left">
+                                                        <h5>头像设置</h5>
+                                                        <p>支持jpg、gif、png等格式的图片(其他的图片格式不支持)</p>
+                                                        <a class="btn btn-mini btn-success">
+                                                            上传头像
+                                                        </a>
+                                                    </dd>
+                                                </dl>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="mod-footer clearfix">
+                                <a href="#" class="btn btn-large btn-success text-center">保存</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

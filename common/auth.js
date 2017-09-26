@@ -43,7 +43,7 @@ const auth = {
                 let auth = auth_token.split('$$$$');
                 let user_id = auth[0];
                 //数据库去找这个用户ID
-                User.find({_id:user_id},(err,user)=>{
+                User.findOne({_id:user_id},(err,user)=>{
                     if(err){
                         return res.end(err);
                     }else{
