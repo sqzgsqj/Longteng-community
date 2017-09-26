@@ -9,6 +9,8 @@ const bodyParser = require('body-parser');
 const partials = require('express-partials');
 //引入路由规则的文件
 const routes = require('./routes');
+//引入setting配置文件
+const setting = require('./setting');
 const app = express();
 
 // view engine setup
@@ -20,7 +22,7 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser(setting.cookie_secret));
 app.use(express.static(path.join(__dirname, 'public')));
 //使用这个模板的第三方插件
 app.use(partials());

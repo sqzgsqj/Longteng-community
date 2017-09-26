@@ -13,6 +13,8 @@ const DBSet = require('../model/db');
 const setting = require('../setting');
 //发送邮件的文件
 const mail = require('../common/mail');
+//引入权限的文件
+const auth = require('../common/auth');
 //首页的处理函数
 exports.index = (req,res,next)=>{
     res.render('index',{
@@ -110,7 +112,7 @@ exports.postLogin = (req,res,next)=>{
     }
     //4.如果验证不成功，直接将错误提示返回，让用户重新填写内容
     if(error){
-        res.end(error);
+        return res.end(error);
     }else{
         //验证成功
         if(getEmail){
@@ -120,18 +122,20 @@ exports.postLogin = (req,res,next)=>{
         }
         getUser(name,(err,user)=>{
             if(err){
-                res.end(err);
+                return res.end(err);
             }
             if(!user){
-                res.end('该用户名/邮箱不存在');
+                return res.end('该用户名/邮箱不存在');
             }
             //最后一步，比较密码了
             let newPSD = DBSet.encrypt(password,setting.psd);
             if(user.password != newPSD){
-                res.end('密码错误,请重新输入');
+                return res.end('密码错误,请重新输入');
             }
+            //生成cookie
+            auth.gen_session(user,res);
             //正确了，直接返回一个字符串,success
-            res.end('success');
+            return res.end('success');
         })
     }
 }

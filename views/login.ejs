@@ -39,6 +39,12 @@
                 <a href="#" class="btn btn-block btn-weibo"><i class="icon icon-weibo"></i> 新浪微博登录</a>
                 <a href="#" class="btn btn-block btn-qq"> <i class="icon icon-qq"></i> QQ登录</a>
             </div>
+            <div class="clearfix"></div>
+            <div style="margin-top:10px;height:20px;">
+                <div ng-cloak id="errorbox"  ng-show="error" class="alert alert-danger text-center" role="alert">
+                    {{ error }}
+                </div>
+            </div>
         </div>
         <div class="mod-footer">
             <span>还没有账号?</span>&nbsp;&nbsp;

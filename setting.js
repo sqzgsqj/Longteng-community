@@ -20,4 +20,8 @@ module.exports = {
             pass:'lizhi123123'
         }
     },
+    //cookie的名字
+    auth_name:'ask_system',
+    //cookie的加密key值
+    cookie_secret:'lizhiyuan',
 }
