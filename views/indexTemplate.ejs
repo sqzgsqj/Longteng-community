@@ -50,19 +50,55 @@
             </div>
             <nav role="navigation" class="collapse navbar-collapse bs-navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="#" class="active"><i class="fa fa-id-card"></i> 发现</a></li>
-                    <li><a href="#"><i class="fa fa-male"></i> 话题</a></li>
+                    <li><a href="/" class="active"><i class="fa fa-id-card"></i> 发现</a></li>
+                    <% if(user){%>
+                    <li><a href="my/messages"><i class="fa fa-bell-o"></i>消息</a></li>
+                    <%}%>
                 </ul>
             </nav>
         </div>
         <!--导航-->
         <!--登录注册-->
         <div class="aw-user-nav">
+            <% if(!user){%>
             <span>
-                <a class="register btn btn-normal btn-success" href="/register">注册</a>
-                <a class="login btn btn-normal btn-primary" href="/login">登录</a>
+                <a class="register btn btn-normal btn-success" href="/register">
+                    注册
+                </a>
+                <a class="login btn btn-normal btn-primary" href="/login">
+                    登录
+                </a>
             </span>
+            <%}else{%>
+            <a href="#" class="aw-user-nav-dropdown">
+                <img src="/images/default-avatar.jpg">
+            </a>
+            <div class="aw-dropdown dropdown-list pull-right">
+                <ul class="aw-dropdown-list">
+                    <li class="hidden-xs">
+                        <a href="/setting">
+                            <i class="fa fa-cogs"></i>
+                            设置
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/logout">
+                            <i class="fa fa-sign-out"></i>
+                            退出
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <%}%>
         </div>
+        <% if(user){%>
+        <div class="aw-publish-btn">
+            <a id="header_publish" href="/question/create" class="btn-primary">
+                <i class="fa fa-book"></i>
+                发起
+            </a>
+        </div>
+        <% }%>
     </div>
 </div>
 <%- body %>

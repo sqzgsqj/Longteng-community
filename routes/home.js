@@ -141,7 +141,11 @@ exports.postLogin = (req,res,next)=>{
 }
 //退出行为的处理函数
 exports.logout = (req,res,next)=>{
-
+    //清除session
+    req.session.destroy()
+    //cookie删除
+    res.clearCookie(setting.auth_name);
+    res.redirect('/');
 }
 
 
