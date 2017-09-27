@@ -6,6 +6,7 @@ const mapping = require('../static');
 const formidable = require('formidable');
 const moment = require('moment');
 const fs = require('fs');
+const gm = require('gm');
 //个人设置的处理函数
 exports.setting = (req,res,next)=>{
     res.render('setting',{
@@ -20,6 +21,7 @@ exports.updateImage = (req,res,next)=>{
     let form = new formidable.IncomingForm();
     form.uploadDir = 'public/upload/images/';
     let updatePath = 'public/upload/images/';
+    let smallImgPath = "public/upload/smallimgs/";
     let files = [];
     let fields = [];
     form.on('field',function(field,value){
@@ -35,10 +37,20 @@ exports.updateImage = (req,res,next)=>{
         let ms = moment(date).format('YYYYMMDDHHmmss').toString();
         let newFileName = 'img' + ms + '.' + type;
         fs.rename(file.path,updatePath + newFileName,function(err){
-            return res.json({
-                error:'',
-                initialPreview:['<img src="' + '/upload/images/' + newFileName + '">']
-            })
+            var input = updatePath + newFileName;
+            var out = smallImgPath + newFileName;
+            gm(input).resize(100,100,'!').autoOrient().write(out, function (err) {
+                if(err){
+                    console.log(err);
+                }else{
+                    console.log('done');
+                    //压缩后再返回，否则的话，压缩会放在后边，导致链接失效
+                    return res.json({
+                        error:'',
+                        initialPreview:['<img src="' + '/upload/smallimgs/' + newFileName + '">']
+                    })
+                }
+            });
         })
     })
     form.parse(req);
