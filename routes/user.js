@@ -47,7 +47,8 @@ exports.updateImage = (req,res,next)=>{
                     //压缩后再返回，否则的话，压缩会放在后边，导致链接失效
                     return res.json({
                         error:'',
-                        initialPreview:['<img src="' + '/upload/smallimgs/' + newFileName + '">']
+                        initialPreview:['<img src="' + '/upload/smallimgs/' + newFileName + '">'],
+                        url:out
                     })
                 }
             });

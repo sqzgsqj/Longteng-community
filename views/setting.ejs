@@ -93,8 +93,8 @@
         language: "zh",
         allowedFileExtensions: ["jpg", "png", "gif"],
         defaultPreviewContent:'<img src="<%= user.avatar %>">'
+    }).on('fileuploaded',function(event,data,previewId,index){
+        console.log(data.response.url.replace('public',''));
     });
-    $('#avatar').on('fileuploaded',function(event,data,previewId,index){
 
-    })
 </script>
