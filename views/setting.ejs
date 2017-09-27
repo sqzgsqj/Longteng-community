@@ -33,20 +33,21 @@
                                             <dl>
                                                 <dt><label>个性签名:</label></dt>
                                                 <dd class="introduce">
-                                                    <input class="form-control" type="text" value="<%= user.motto %>">
+                                                    <input class="form-control" type="text" value="<%= user.motto %>" required>
                                                 </dd>
                                             </dl>
                                             <div class="side-bar">
                                                 <dl>
-                                                    <dt class="pull-left">
-                                                        <img class="aw-border-radius-5" src="<%= user.avatar %>">
+                                                    <dt class="pull-left text-center">
+                                                        <div class="kv-avatar">
+                                                            <div class="file-loading">
+                                                                <input id="avatar" name="avatar" type="file" required>
+                                                            </div>
+                                                        </div>
                                                     </dt>
-                                                    <dd class="pull-left">
+                                                    <dd style="width:200px;" class="pull-left text-center">
                                                         <h5>头像设置</h5>
                                                         <p>支持jpg、gif、png等格式的图片(其他的图片格式不支持)</p>
-                                                        <a class="btn btn-mini btn-success">
-                                                            上传头像
-                                                        </a>
                                                     </dd>
                                                 </dl>
                                             </div>
@@ -56,6 +57,9 @@
                             </div>
                             <div class="mod-footer clearfix">
                                 <a href="#" class="btn btn-large btn-success text-center">保存</a>
+                                <div id="kv-avatar-errors-2" class="center-block text-center" style="width:800px;display:none">
+
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -64,3 +68,33 @@
         </div>
     </div>
 </div>
+<link rel="stylesheet" href="/plugins/fileinput/css/fileinput.min.css">
+<script src="/plugins/fileinput/js/fileinput.min.js"></script>
+<script src="/plugins/fileinput/js/locales/zh.js"></script>
+<script>
+    $("#avatar").fileinput({
+        overwriteInitial: true,
+        uploadUrl:'/updateImage',
+        maxFileSize: 1500,
+        showClose: false,
+        showCaption: false,
+        showBrowse: false,
+        browseOnZoneClick: true,
+        removeLabel:'',
+        removeIcon:'<i class="glyphicon glyphicon-remove"></i>',
+        removeClass:'btn btn-danger',
+        removeTitle:"取消或重置更改",
+        uploadLabel:'',
+        uploadClass:'btn btn-success',
+        uploadIcon:'<i class="glyphicon glyphicon-arrow-up"></i>',
+        msgErrorClass:'alert alert-block alert-danger',
+        elErrorContainer:'kv-avatar-errors-2',
+        layoutTemplates:{main2:'{preview}' + '{browse}'},
+        language: "zh",
+        allowedFileExtensions: ["jpg", "png", "gif"],
+        defaultPreviewContent:'<img src="<%= user.avatar %>">'
+    });
+    $('#avatar').on('fileuploaded',function(event,data,previewId,index){
+
+    })
+</script>
