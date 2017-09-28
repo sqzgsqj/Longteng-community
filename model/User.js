@@ -71,6 +71,9 @@ UserSchema.statics = {
     },
     getUserByEmail:(email,callback)=>{
         User.findOne({email:email},callback)
+    },
+    getUserById:(id,callback)=>{
+        User.findOne({_id:id},callback)
     }
 }
 const User = mongoose.model('User',UserSchema);

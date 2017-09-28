@@ -7,6 +7,9 @@ const formidable = require('formidable');
 const moment = require('moment');
 const fs = require('fs');
 const gm = require('gm');
+//引入User
+const User = require('../model/User');
+const validator = require('validator');
 //个人设置的处理函数
 exports.setting = (req,res,next)=>{
     res.render('setting',{
@@ -58,7 +61,38 @@ exports.updateImage = (req,res,next)=>{
 }
 //更新个人资料的处理函数
 exports.updateUser = (req,res,next)=>{
-
+    let id = req.params.id;
+    let motto = req.body.motto;
+    let avatar = req.body.avatar;
+    let error;
+    if(!validator.isLength('motto',0)){
+        error = '个性签名不能为空';
+    }
+    if(!validator.isLength('avatar',0)){
+        error = '头像的地址不能为空';
+    }
+    if(error){
+        res.end(error);
+    }else{
+        //查询数据库对应用户信息
+        User.getUserById(id,(err,user)=>{
+            if(err){
+                return res.end(err);
+            }
+            if(!user){
+                return res.end('用户不存在');
+            }
+            user.update_time = new Date();
+            user.motto = motto;
+            user.avatar = avatar;
+            user.save().then((user)=>{
+                req.session.user = user;
+                return res.end('success');
+            }).catch((err)=>{
+                return res.end(err);
+            })
+        })
+    }
 }
 //用户排名
 exports.all = (req,res,next)=>{
