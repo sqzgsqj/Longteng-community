@@ -16,3 +16,6 @@
 .aw-search-dropdown-list li a:hover{color: #005580;}
 .aw-agree-by .aw-user-name{color: #999 !important;}
 .aw-ie6 .pull-right h1 span{color: #c20200;}
+.CodeMirror .cm-spell-error:not(.cm-url):not(.cm-comment):not(.cm-tag):not(.cm-word) {
+    background: none !important;
+}

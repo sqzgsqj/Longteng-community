@@ -50,6 +50,9 @@
                             </div>
                             <div class="mod-footer clearfix">
                                 <button type="submit" class="btn btn-large btn-success" ng-disabled="createForm.$invalid || !isLegal">确认发起</button>
+                                <div ng-show="error" style="margin-top:20px" id="errorbox" class="alert alert-danger text-center">
+                                   {{error}}
+                                </div>
                             </div>
                         </div>
                     </form>
