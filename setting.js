@@ -24,4 +24,9 @@ module.exports = {
     auth_name:'ask_system',
     //cookie的加密key值
     cookie_secret:'lizhiyuan',
+    categorys:[
+        ['ask','问答'],
+        ['share','分享'],
+        ['job','招聘']
+    ]
 }

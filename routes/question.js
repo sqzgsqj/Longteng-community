@@ -1,9 +1,14 @@
 /**
  * Created by hama on 2017/9/18.
  */
+const setting = require('../setting');
 //新建问题的处理函数
 exports.create = (req,res,next)=>{
-
+    res.render('create-question',{
+        title:'新建问题',
+        layout:'indexTemplate',
+        categorys:setting.categorys
+    })
 }
 //新建行为的处理函数
 exports.postCreate = (req,res,next)=>{

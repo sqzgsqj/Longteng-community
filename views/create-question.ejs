@@ -1,0 +1,60 @@
+<div class="aw-container-wrap" ng-app="createApp" ng-controller="createController">
+    <div class="container aw-publish">
+        <div class="row">
+            <div class="aw-content-wrap clearfix">
+                <div class="col-sm-12 col-md-9 aw-main-content">
+                    <ul class="nav nav-tabs aw-nav-tabs active">
+                        <h2 class="hidden-xs">
+                            <i class="fa fa-credit-card"></i>
+                            发起
+                        </h2>
+                    </ul>
+                    <!--问题的主题-->
+                    <form name="createForm" ng-submit="postForm()">
+                        <div class="aw-mod aw-mod-publish">
+                            <div class="mod-body">
+                                <h3>问题的分类</h3>
+                                <div class="aw-publish-title">
+                                    <div>
+                                        <select name="category" ng-model="formData.category"  style="width:50%" class="form-control">
+                                            <% categorys.forEach(function(category,index){ %>
+                                            <option value="<%= category[0]%>"><%= category[1] %></option>
+                                            <% }) %>
+                                        </select>
+                                    </div>
+                                </div>
+                                <h3>问题的标题</h3>
+                                <div class="aw-publish-title">
+                                    <div>
+                                        <input type="text" placeholder="问题标题..." class="form-control" name="title" ng-model="formData.title" ng-minlength="8" ng-maxlength="20" required>
+                                        <div style="height:15px;">
+                                            <span ng-cloak ng-show="createForm.title.$invalid && !createForm.title.$pristine" class="text-danger">
+                                            <i class="fa fa-close"></i>
+                                            标题的长度不合法,请重新填写
+                                        </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h3>问题补充:</h3>
+                                <div class="aw-mod aw-editor-box">
+                                    <div style="border:none" class="mod-head">
+                                        <textarea id="question" placeholder="内容支持markdown格式,请正确填写您的问题"></textarea>
+                                    </div>
+                                    <div class="mod-body">
+                                        <span ng-show="!isLegal" class="text-danger">
+                                            <i class="fa fa-exclamation-triangle"></i>
+                                            输入的内容长度必须大于10个字符
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mod-footer clearfix">
+                                <button type="submit" class="btn btn-large btn-success" ng-disabled="createForm.$invalid || !isLegal">确认发起</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
