@@ -74,6 +74,12 @@ UserSchema.statics = {
     },
     getUserById:(id,callback)=>{
         User.findOne({_id:id},callback)
+    },
+    getUserByNames:(names,callback)=>{
+        if(names.length == 0){
+            return callback(null,[]);
+        }
+        User.find({name:{$in:names}},callback);
     }
 }
 const User = mongoose.model('User',UserSchema);

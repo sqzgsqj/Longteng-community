@@ -7,6 +7,8 @@ const validator = require('validator');
 const Question = require('../model/Question');
 //引入用户表
 const User = require('../model/User');
+//引入at模块
+const at = require('../common/at');
 //新建问题的处理函数
 exports.create = (req,res,next)=>{
     res.render('create-question',{
@@ -33,7 +35,6 @@ exports.postCreate = (req,res,next)=>{
         //验证成功后
         req.body.author = req.session.user._id;
         let newQuestion = new Question(req.body);
-        console.log(newQuestion);
         newQuestion.save().then(question=>{
             //某个人发布一篇文章，积分+5,发布数量+1
             User.getUserById(req.session.user._id,(err,user)=>{
@@ -48,7 +49,7 @@ exports.postCreate = (req,res,next)=>{
                 res.json({url:`/question/${question._id}`})
             })
             //发送at消息
-            /*at.sendMessageToMentionUsers(content,article._id,req.session.user._id);*/
+            at.sendMessageToMentionUsers(content,question._id,req.session.user._id);
         }).catch(err=>{
             return res.end(err);
         })
