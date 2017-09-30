@@ -49,14 +49,16 @@ exports.postCreate = (req,res,next)=>{
                 res.json({url:`/question/${question._id}`})
             })
             //发送at消息
-            at.sendMessageToMentionUsers(content,question._id,req.session.user._id);
+            at.sendMessageToMentionUsers(content,question._id,req.session.user._id,(err,msg)=>{
+              if(err){
+                  console.log(err);
+              }
+              return;
+            });
         }).catch(err=>{
             return res.end(err);
         })
     }
-
-
-
 }
 //编辑问题的处理函数
 exports.edit = (req,res,next)=>{

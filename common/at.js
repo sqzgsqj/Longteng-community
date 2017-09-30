@@ -4,6 +4,8 @@
 const _ = require('lodash');
 //引入User 表
 const User = require('../model/User');
+//引入message方法
+const message = require('./message');
 const at = {
     fetchUser:(text)=>{
         if(!text){
@@ -47,15 +49,22 @@ const at = {
             users = users.filter(function(user){
                 return user._id != authorId
             })
-            console.log(users);
             //循环所有的目标用户，将消息存入消息表中
-           /* users.forEach((user)=>{
-                message.sendAtMessage(user._id,questionId,authorId,replyId,(err,msg)=>{
-                    callback();
+            //如果users为空，那么证明：你要@的人是不存在的，所以，也就没有必要
+            //再创建对应的消息
+            if(users.length != 0){
+                users.forEach((user)=>{
+                    message.sendAtMessage(user._id,questionId,authorId,replyId,(err,msg)=>{
+                        //成功的回调函数
+                        if(err){
+                            callback(err);
+                        }else{
+                            callback(null,msg);
+                        }
+                    })
                 })
-            })*/
+            }
         })
     }
-
 }
 module.exports = at
