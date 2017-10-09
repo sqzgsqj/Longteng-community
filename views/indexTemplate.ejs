@@ -52,7 +52,17 @@
                 <ul class="nav navbar-nav">
                     <li><a href="/" class="active"><i class="fa fa-id-card"></i> 发现</a></li>
                     <% if(user){%>
-                    <li><a href="my/messages"><i class="fa fa-bell-o"></i>消息</a></li>
+                    <li>
+                        <a href="/my/messages">
+                            <i class="fa fa-bell-o"></i>
+                            消息
+                        </a>
+                        <% if(msg_count){%>
+                        <span class="badge badge-important">
+                            <%= msg_count %>
+                        </span>
+                        <% } %>
+                    </li>
                     <%}%>
                 </ul>
             </nav>

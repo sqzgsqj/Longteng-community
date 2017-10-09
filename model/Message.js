@@ -44,5 +44,10 @@ const MessageSchema = new Schema({
         default:Date.now
     }
 })
+MessageSchema.statics = {
+    getMessagesCount:(id,callback)=>{
+        Message.count({'target_id':id,'has_read':false},callback)
+    }
+}
 const Message = mongoose.model('Message',MessageSchema);
 module.exports = Message
