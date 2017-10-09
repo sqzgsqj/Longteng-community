@@ -21,36 +21,40 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="no_read">
                             <div class="aw-mod aw-explore-list">
-                                <!--全部已读的按钮-->
+                               <%if(no_read && no_read.length > 0){%>
                                <div style="margin:20px 0">
                                    <button class="btn btn-success pull-left">
                                        全部已读
                                    </button>
                                </div>
+                               <%}%>
                                <div class="aw-common-list">
-                                   <div class="aw-item" style="padding-left: 0">
-                                       <div>
-                                           <a href="#">aylizhiyuan</a>
-                                           在
-                                           <a href="#">请问怎么做才合适</a>
-                                           中@我
-                                           <button class="btn btn-primary pull-right btn-sm">确认已读</button>
-                                       </div>
-                                   </div>
+                                   <% if(no_read && no_read.length > 0){ %>
+                                   <% no_read.forEach(function(message,index){%>
+                                   <% if(message.type == 'at'){%>
+                                   <% include public/unat %>
+                                   <% } %>
+                                   <% }) %>
+                                   <% }else{ %>
+                                   <br>
+                                   <p>没有未读消息...</p>
+                                   <% } %>
                                </div>
                             </div>
                         </div>
                         <div class="tab-pane" id="read">
                             <div class="aw-mod aw-explore-list">
                                 <div class="aw-common-list">
-                                    <div class="aw-item" style="padding-left: 0">
-                                        <div>
-                                            <a href="#">aylizhiyuan</a>
-                                            在
-                                            <a href="#">请问怎么做才合适</a>
-                                            中@我
-                                        </div>
-                                    </div>
+                                    <% if(read && read.length > 0){ %>
+                                    <% read.forEach(function(message,index){%>
+                                    <% if(message.type == 'at'){%>
+                                    <% include public/at %>
+                                    <% } %>
+                                    <% }) %>
+                                    <% }else{ %>
+                                    <br>
+                                    <p>没有已读消息...</p>
+                                    <%}%>
                                 </div>
                             </div>
                         </div>
