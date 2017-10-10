@@ -1,9 +1,9 @@
-<div class="aw-item" style="padding-left: 0">
+<div class="aw-item" message-id="<%= message._id %>" style="padding-left: 0">
     <div>
         <a href="#"><%= message.author_id.name %></a>
         在
         <a href="#"><%= message.question_id.title %></a>
         中@我
-        <button class="btn btn-primary pull-right btn-sm">确认已读</button>
+        <button ng-click="readOne(<%= index %>)" class="btn btn-primary pull-right btn-sm">确认已读</button>
     </div>
 </div>

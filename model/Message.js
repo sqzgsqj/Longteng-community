@@ -45,9 +45,13 @@ const MessageSchema = new Schema({
     }
 })
 MessageSchema.statics = {
-    //获取消息的数量
-    getMessagesCount:(id,callback)=>{
+    //获取未读消息的数量
+    getMessagesNoReadCount:(id,callback)=>{
         Message.count({'target_id':id,'has_read':false},callback)
+    },
+    //获取已读消息的数量
+    getMessagesReadCount:(id,callback)=>{
+        Message.count({'target_id':id,'has_read':true},callback)
     },
     //读取未读消息
     getUnReadMessages:(id,callback)=>{
@@ -55,7 +59,19 @@ MessageSchema.statics = {
     },
     //读取已读消息
     getReadMessages:(id,callback)=>{
-        Message.find({'target_id':id,'has_read':true},null,{sort:'-create_time',limit:20}).populate('author_id').populate('target_id').populate('question_id').exec(callback);
+        Message.find({'target_id':id,'has_read':true},null,{sort:'-create_time',limit:5}).populate('author_id').populate('target_id').populate('question_id').exec(callback);
+    },
+    //更新某条消息为已读
+    updateMessage:(id,callback)=>{
+        Message.update({'_id':id},{$set:{'has_read':true}}).exec(callback);
+    },
+    //更新某个用户的所有消息为已读
+    updateAllMessage:(user_id,callback)=>{
+        Message.update({'target_id':user_id},{$set:{'has_read':true}},{multi:true}).exec(callback);
+    },
+    //显示分页后的已读消息列表
+    showMessagesPage:(user_id,startNum,limit,callback)=>{
+        Message.find({'target_id':user_id,'has_read':true}).sort({'create_time':'-1'}).populate('author_id').populate('target_id').populate('question_id').skip(startNum).limit(limit).exec(callback)
     }
 }
 const Message = mongoose.model('Message',MessageSchema);

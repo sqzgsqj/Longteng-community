@@ -1,0 +1,7 @@
+<ul class="pagination pull-right">
+    <% pageArr.forEach(function(page){%>
+    <li class="<%= page == currentPage ? 'active':'' %>">
+        <a class="messagePage" href="javascript:void(0)"><%= page %></a>
+    </li>
+    <%})%>
+</ul>

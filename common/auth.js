@@ -35,7 +35,7 @@ const auth = {
         //用户的登录情况
         if(req.session.user){
             //添加用户的消息数量
-            Message.getMessagesCount(req.session.user._id,(err,count)=>{
+            Message.getMessagesNoReadCount(req.session.user._id,(err,count)=>{
                 req.session.msg_count = count;
                 next();//用户已经登录情况下，直接下一步
             })
@@ -59,7 +59,7 @@ const auth = {
                         }else{
                             //3.结束
                             //查询出用户的消息数量
-                            Message.getMessagesCount(user._id,(err,count)=>{
+                            Message.getMessagesNoReadCount(user._id,(err,count)=>{
                                 req.session.msg_count = count;
                                 req.session.user = user;
                                 next();

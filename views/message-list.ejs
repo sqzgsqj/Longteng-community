@@ -1,4 +1,4 @@
-<div class="aw-container-wrap">
+<div class="aw-container-wrap" ng-app="messageApp" ng-controller="messageController">
     <div class="container">
         <div class="row">
             <div class="aw-content-wrap clearfix">
@@ -23,7 +23,7 @@
                             <div class="aw-mod aw-explore-list">
                                <%if(no_read && no_read.length > 0){%>
                                <div style="margin:20px 0">
-                                   <button class="btn btn-success pull-left">
+                                   <button ng-click="allRead()" class="btn btn-success pull-left">
                                        全部已读
                                    </button>
                                </div>
@@ -51,6 +51,7 @@
                                     <% include public/at %>
                                     <% } %>
                                     <% }) %>
+                                    <% include public/message-page %>
                                     <% }else{ %>
                                     <br>
                                     <p>没有已读消息...</p>
