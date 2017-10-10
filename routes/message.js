@@ -3,6 +3,7 @@
  */
 //消息列表的处理函数
 const Message = require('../model/Message');
+const EJS = require('ejs');
 exports.index = (req,res,next)=>{
     //未读消息和已读消息两种消息分别查询出来，放到这个页面里面去
     //读取的是当前登录用户的已读消息和未读消息
@@ -83,8 +84,9 @@ exports.showMessagesPage = (req,res,next)=>{
     let limit = 5;
     let startNum = (page - 1) * limit;
     Message.showMessagesPage(user_id,startNum,limit,(err,messages)=>{
-        res.render('show-message',(err,html)=>{
-            res.send(html);
+        res.render('show-message',{
+            messages:messages,
+            layout:''
         })
     })
 }
