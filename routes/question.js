@@ -2,6 +2,7 @@
  * Created by hama on 2017/9/18.
  */
 const setting = require('../setting');
+const mapping = require('../static');
 const validator = require('validator');
 //引入问题表
 const Question = require('../model/Question');
@@ -74,8 +75,35 @@ exports.delete = (req,res,next)=>{
 }
 //查询问题的处理函数
 exports.index = (req,res,next)=>{
-    res.render('question',{
-        title:'问题详情',
-        layout:'indexTemplate'
+    //问题的ID
+    let question_id = req.params.id;
+    //当前登录的用户
+    let currentUser = req.session.user;
+    //1.问题的信息
+    //2.问题的回复信息
+    //3.当前用户的其他相关文章推荐
+    Question.getFullQuestion(question_id,(err,question)=>{
+        if(err){
+            return res.end(err);
+        }
+        if(question == null){
+            return res.render('error',{
+                title:'错误页面',
+                resource:mapping.userSetting,
+                layout:'indexTemplate',
+                message:'该问题不存在或者已经被删除',
+                error:''
+            })
+        }
+        //给问题的内容如果有@用户 ，给@用户添加一个链接
+        question.content = at.linkUsers(question.content);
+        //问题的访问量+1
+        question.click_num += 1;
+        question.save();
+        return res.render('question',{
+            title:'问题详情页面',
+            layout:'indexTemplate',
+            question:question
+        })
     })
 }

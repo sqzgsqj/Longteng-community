@@ -65,6 +65,20 @@ const at = {
                 })
             }
         })
+    },
+    linkUsers:(text)=>{
+        let users = at.fetchUser(text);
+        //循环@人名数组
+        if(users.length == 0){
+            return text;
+        }else{
+            for(let i=0;l=users.length,i<l;i++){
+                //每一个人名
+                let name = users[i];
+                text = text.replace(new RegExp('@' + name + '\\b(?!\\])', 'g'), '[@' + name + '](/user/' + name + ')');
+            }
+            return text;
+        }
     }
 }
 module.exports = at

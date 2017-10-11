@@ -7,7 +7,9 @@
                     <div class="aw-mod aw-topic-bar">
                         <div class="clearfix">
                             <span class="topic-tag">
-                                <a href="#" class="text">不同的话题</a>
+                                <a href="#" class="text">
+                                    <%= question.categoryName %>
+                                </a>
                             </span>
                         </div>
                     </div>
@@ -15,7 +17,7 @@
                     <!--问题主体-->
                     <div class="aw-mod aw-question-detail">
                         <div class="mod-head">
-                            <h1>bootstrap如何才能很好的使用，为什么我一直都学不会啊？</h1>
+                            <h1><%= question.title %></h1>
                             <div class="operate clearfix">
                                 <a href="#" class="follow btn btn-normal btn-success pull-left ">
                                     <span>关注</span> <em>|</em> <b>2</b>
@@ -23,11 +25,11 @@
                             </div>
                         </div>
                         <div class="mod-body">
-                            <div class="content markitup-box">求助各位大神</div>
+                            <div class="content markitup-box"><%= question.content %></div>
                         </div>
                         <div class="mod-footer">
                             <div class="meta">
-                                <span class="text-color-999">2016-5-16</span>
+                                <span class="text-color-999"><%= question.create_time_ago() %></span>
                                 <a class="aw-add-comment text-color-999">
                                     <i class="fa fa-commenting-o"></i>&nbsp;添加评论
                                 </a>
@@ -153,16 +155,18 @@
                         <div class="mod-body">
                             <dl>
                                 <dt class="pull-left aw-border-radius-5">
-                                    <a href="#"><img src="/images/avatar-max-img.png"></a>
+                                    <a href="#"><img src="<%= question.author.avatar %>"></a>
                                 </dt>
                                 <dd class="pull-left">
-                                    <a class="aw-user-name" href="#">李志远</a>
+                                    <a class="aw-user-name" href="#">
+                                        <%= question.author.name %>
+                                    </a>
                                     <a class="pull-right">关注</a>
                                 </dd>
                             </dl>
                         </div>
                         <div class="mod-footer">
-                            这家伙很懒。。什么都没有留下...
+                            <%= question.author.motto %>
                         </div>
                     </div>
                     <!--相关问题-->
@@ -188,15 +192,6 @@
                                     <a href="#">如何实现多张图片的垂直居中效果</a>
                                 </li>
                             </ul>
-                        </div>
-                    </div>
-                    <!--其他的版块-->
-                    <div class="aw-mod">
-                        <div class="mod-head">
-                            <h3>其他的板块</h3>
-                        </div>
-                        <div class="mod-body">
-
                         </div>
                     </div>
                 </div>

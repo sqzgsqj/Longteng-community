@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 //引入shortid生成ID的插件
 const shortid = require('shortid');
 const Schema = mongoose.Schema;
+const BaseModel = require('./base_model');
 const UserSchema = new Schema({
     //定义字段
     _id:{
@@ -82,5 +83,6 @@ UserSchema.statics = {
         User.find({name:{$in:names}},callback);
     }
 }
+UserSchema.plugin(BaseModel);
 const User = mongoose.model('User',UserSchema);
 module.exports = User

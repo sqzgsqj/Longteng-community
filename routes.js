@@ -68,5 +68,6 @@ router.get('/updateMessage/:id',auth.userRequired,message.updateMessage);
 router.get('/updateAllMessage',auth.userRequired,message.updateAllMessage);
 //显示已读消息的分页
 router.post('/showMessagesPage/:page',message.showMessagesPage);
+
 module.exports = router;
 

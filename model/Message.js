@@ -5,6 +5,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const shortid = require('shortid');
+const BaseModel = require('./base_model');
 const MessageSchema = new Schema({
     _id:{
         type:String,
@@ -74,5 +75,6 @@ MessageSchema.statics = {
         Message.find({'target_id':user_id,'has_read':true}).sort({'create_time':'-1'}).populate('author_id').populate('target_id').populate('question_id').skip(startNum).limit(limit).exec(callback)
     }
 }
+MessageSchema.plugin(BaseModel);
 const Message = mongoose.model('Message',MessageSchema);
 module.exports = Message
