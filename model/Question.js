@@ -92,6 +92,10 @@ QuestionSchema.statics = {
     getFullQuestion:(id,callback)=>{
         //暂时可以先不去查询last_reply这个信息
         Question.findOne({'_id':id,'deleted':false}).populate('author').populate('last_reply_author').exec(callback)
+    },
+    //获取作者的其他文章列表
+    getOtherQuestions:(author,question_id,callback)=>{
+        Question.find({'author':author,'_id':{$nin:[question_id]}}).limit(5).sort({'last_reply_time':-1,'create_time':-1}).exec(callback)
     }
 }
 QuestionSchema.plugin(BaseModel);

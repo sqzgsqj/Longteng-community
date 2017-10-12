@@ -81,7 +81,7 @@ exports.index = (req,res,next)=>{
     let currentUser = req.session.user;
     //1.问题的信息
     //2.问题的回复信息
-    //3.当前用户的其他相关文章推荐
+    //3.问题作者的其他相关文章推荐
     Question.getFullQuestion(question_id,(err,question)=>{
         if(err){
             return res.end(err);
@@ -100,10 +100,14 @@ exports.index = (req,res,next)=>{
         //问题的访问量+1
         question.click_num += 1;
         question.save();
-        return res.render('question',{
-            title:'问题详情页面',
-            layout:'indexTemplate',
-            question:question
+        Question.getOtherQuestions(question.author._id,question._id,(err,questions)=>{
+            return res.render('question',{
+                title:'问题详情页面',
+                layout:'indexTemplate',
+                question:question,
+                others:questions
+            })
         })
     })
+
 }
