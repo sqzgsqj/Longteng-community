@@ -52,7 +52,7 @@
                     <!--问题主体-->
                     <!--编辑器-->
                     <div class="aw-mod aw-replay-box">
-                        <form action="">
+                        <form id="reply_form" target="/<%= question._id %>/reply" ng-submit="postForm()">
                             <div class="mod-head">
                                 <a href="/user/<%= user.name %>" class="aw-user-name">
                                     <img src="<%= user.avatar %>">
@@ -72,7 +72,7 @@
                                     </div>
                                     <div class="mod-body clearfix">
                                         <span class="pull-right">
-                                            <a href="#" class="btn btn-normal btn-success">回复</a>
+                                            <button id="reply_button" type="submit" class="btn btn-normal btn-success">回复</button>
                                         </span>
                                     </div>
                                 </div>
@@ -126,8 +126,3 @@
         </div>
     </div>
 </div>
-<style>
-    .CodeMirror,.CodeMirror-scroll {
-        min-height:100px !important;
-    }
-</style>

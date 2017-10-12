@@ -12,6 +12,8 @@ const question = require('./routes/question');
 const user = require('./routes/user');
 //引入消息的处理函数
 const message = require('./routes/message');
+//引入一级回复的处理函数
+const reply = require('./routes/reply');
 //引入权限文件
 const auth = require('./common/auth');
 //************************************首页***************************************
@@ -67,7 +69,10 @@ router.get('/updateMessage/:id',auth.userRequired,message.updateMessage);
 //确认全部已读行为
 router.get('/updateAllMessage',auth.userRequired,message.updateAllMessage);
 //显示已读消息的分页
-router.post('/showMessagesPage/:page',message.showMessagesPage);
+router.post('/showMessagesPage/:page',auth.userRequired,message.showMessagesPage);
+
+//**************************************回复*************************************
+router.post('/:question_id/reply',auth.userRequired,reply.add);//一级回复
 
 module.exports = router;
 
