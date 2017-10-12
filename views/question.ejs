@@ -25,7 +25,9 @@
                             </div>
                         </div>
                         <div class="mod-body">
-                            <div class="content markitup-box"><%= question.content %></div>
+                            <div class="content markitup-box">
+                                <%- markdown(question.content) %>
+                            </div>
                         </div>
                         <div class="mod-footer">
                             <div class="meta">

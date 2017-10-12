@@ -15,6 +15,8 @@ const routes = require('./routes');
 const setting = require('./setting');
 //引入权限文件
 const auth = require('./common/auth');
+//引入lodash工具类
+const _ = require('lodash');
 const app = express();
 
 // view engine setup
@@ -65,6 +67,7 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.render('error');
 });
+_.extend(app.locals,require('./common/markdown'));
 app.listen(5000,()=>{
   console.log('node is OK');
 })

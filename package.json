@@ -21,12 +21,14 @@
     "jade": "~1.11.0",
     "jquery": "^3.2.1",
     "lodash": "^4.17.4",
+    "markdown-it": "^8.4.0",
     "moment": "^2.18.1",
     "mongoose": "^4.11.11",
     "morgan": "~1.7.0",
     "nodemailer": "^4.1.0",
     "serve-favicon": "~2.3.0",
     "shortid": "^2.2.8",
-    "validator": "^8.2.0"
+    "validator": "^8.2.0",
+    "xss": "^0.3.4"
   }
 }
