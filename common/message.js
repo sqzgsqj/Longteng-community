@@ -15,6 +15,15 @@ const message = {
         newMessage.save((err,msg)=>{
             return callback(null,msg);
         })
+    },
+    sendReplyMessage:(targetId,authorId,questionId,replyId)=>{
+        let newMessage =  new Message();
+        newMessage.type = 'reply';
+        newMessage.target_id = targetId;
+        newMessage.author_id = authorId;
+        newMessage.question_id = questionId;
+        newMessage.reply_id = replyId;
+        newMessage.save();
     }
 }
 module.exports = message
