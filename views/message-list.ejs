@@ -33,7 +33,9 @@
                                    <% no_read.forEach(function(message,index){%>
                                    <% if(message.type == 'at'){%>
                                    <% include public/unat %>
-                                   <% } %>
+                                   <% }else if(message.type == 'reply'){%>
+                                   <% include public/unreply %>
+                                   <%}%>
                                    <% }) %>
                                    <% }else{ %>
                                    <br>
@@ -49,7 +51,9 @@
                                     <% read.forEach(function(message,index){%>
                                     <% if(message.type == 'at'){%>
                                     <% include public/at %>
-                                    <% } %>
+                                    <% }else if(message.type == 'reply'){ %>
+                                    <% include public/reply %>
+                                    <%}%>
                                     <% }) %>
                                     <% include public/message-page %>
                                     <% }else{ %>

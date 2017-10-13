@@ -62,6 +62,7 @@ exports.add = (req,res,next)=>{
                 //发消息
                 message.sendReplyMessage(question_author,req.session.user._id,reply.question_id._id,reply._id);
             }
+            return res.json({message:'success'});
         }).catch(err=>{
             res.end(err);
         });

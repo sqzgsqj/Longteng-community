@@ -49,5 +49,10 @@ const ReplySchema = new Schema({
     }
 })
 ReplySchema.plugin(BaseModel);
+ReplySchema.statics = {
+    getRepliesByQuestionId:(question_id,callback)=>{
+        Reply.find({'question_id':question_id}).sort({'create_time':1}).populate('author').exec(callback)
+    }
+}
 const Reply = mongoose.model('Reply',ReplySchema);
 module.exports = Reply

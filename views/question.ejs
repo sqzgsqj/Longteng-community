@@ -50,6 +50,7 @@
                         </div>
                     </div>
                     <!--问题主体-->
+                    <% include public/reply-list %>
                     <!--编辑器-->
                     <div class="aw-mod aw-replay-box">
                         <form id="reply_form" target="/<%= question._id %>/reply" ng-submit="postForm()">

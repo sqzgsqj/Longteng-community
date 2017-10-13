@@ -56,11 +56,11 @@ MessageSchema.statics = {
     },
     //读取未读消息
     getUnReadMessages:(id,callback)=>{
-        Message.find({'target_id':id,'has_read':false},null,{sort:'-create_time'}).populate('author_id').populate('target_id').populate('question_id').exec(callback);
+        Message.find({'target_id':id,'has_read':false},null,{sort:'-create_time'}).populate('author_id').populate('target_id').populate('question_id').populate('reply_id').exec(callback);
     },
     //读取已读消息
     getReadMessages:(id,callback)=>{
-        Message.find({'target_id':id,'has_read':true},null,{sort:'-create_time',limit:5}).populate('author_id').populate('target_id').populate('question_id').exec(callback);
+        Message.find({'target_id':id,'has_read':true},null,{sort:'-create_time',limit:5}).populate('author_id').populate('target_id').populate('question_id').populate('reply_id').exec(callback);
     },
     //更新某条消息为已读
     updateMessage:(id,callback)=>{

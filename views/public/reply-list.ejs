@@ -1,30 +1,36 @@
+<% if(replies.length > 0){%>
 <div class="aw-mod aw-question-comment">
     <div class="mod-head">
         <ul class="nav nav-tabs aw-nav-tabs active">
-            <h2 class="hidden-xs">2 个回复</h2>
+            <h2 class="hidden-xs"><%= question.comment_num %>个回复</h2>
         </ul>
     </div>
     <div class="mod-body aw-feed-list">
-        <div class="aw-item">
+        <% replies.forEach(function(reply,index){ %>
+        <div class="aw-item" id="<%= reply._id %>">
             <div class="mod-head">
                 <a class="anchor"></a>
-                <a class="aw-user-img aw-border-radius-5 pull-right" href="#">
-                    <img src="/images/avatar-max-img.png">
+                <a class="aw-user-img aw-border-radius-5 pull-right" href="/user/<%= reply.author.name %>">
+                    <img src="<%= reply.author.avatar %>">
                 </a>
                 <div class="title">
                     <p>
-                        <a class="aw-user-name" href="#">李志远</a>
+                        <a class="aw-user-name" href="/user/<%= reply.author.name %>">
+                            <%= reply.author.name %>
+                        </a>
                     </p>
                 </div>
             </div>
             <div class="mod-body clearfix">
                 <div class="markitup-box">
-                    同求，请问楼主的问题解决了吗?
+                    <%- markdown(reply.content) %>
                 </div>
             </div>
             <div class="mod-footer">
                 <div class="meta clearfix">
-                    <span class="text-color-999 pull-right">22小时之前</span>
+                    <span class="text-color-999 pull-right">
+                        <%= reply.create_time_ago() %>
+                    </span>
                     <span class="operate">
                         <a class="agree">
                             <i class="fa fa-thumbs-o-up"></i>
@@ -37,35 +43,14 @@
                     <span class="operate">
                         <a class="aw-add-comment">
                             <i class="fa fa-commenting-o"></i>
-                            0
+                            <%= reply.comment_num %>条回复
                         </a>
                     </span>
                 </div>
-                <!--回复的DIV留在这里，以后再做-->
-                <div class="aw-comment-box">
-                    <div class="aw-comment-list">
-                        <div align="center" class="aw-padding10">暂无回复</div>
-                        <form action="">
-                            <div class="aw-comment-box-main">
-                                <textarea id="huifu" name="meg_content">
-
-                                </textarea>
-                                <div class="aw-comment-box-btn" style="display: block;">
-                                    <span class="pull-right">
-                                        <a class="btn btn-mini btn-success">
-                                            评论
-                                        </a>
-                                        <a class="btn btn-mini btn-gray close-comment-box">
-                                            取消
-                                        </a>
-                                    </span>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
             </div>
         </div>
+        <% }) %>
     </div>
     <div class="mod-footer"></div>
 </div>
+<% } %>
