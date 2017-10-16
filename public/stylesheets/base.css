@@ -19,3 +19,34 @@
 .CodeMirror .cm-spell-error:not(.cm-url):not(.cm-comment):not(.cm-tag):not(.cm-word) {
     background: none !important;
 }
+.comment_markdown {
+    width:100%;
+    min-height: 30px;
+    /*设置最小高度*/
+    max-height: 1000px;
+    /*设置最大高度超过300px时出现滚动条*/
+    _height: 120px;
+    margin-left: auto;
+    margin-right: auto;
+    outline: 0;
+    border: 1px solid #e7eaf1;
+    border-radius: 4px;
+    font-size: 14px;
+    word-wrap: break-word;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background:rgb(247,248,250);
+    transition: all 1s;
+}
+.comment_markdown:focus {
+    border-color:#bbb;
+    background:#fff;
+}
+.comment_markdown:empty::before{
+    color:lightgrey !important;
+    content:attr(placeholder) !important;
+}
+
+.public {
+    width:90% !important;
+}
