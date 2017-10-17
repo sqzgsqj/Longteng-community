@@ -35,10 +35,17 @@ const at = {
         names = _.uniq(names);
         return names
     },
-    sendMessageToMentionUsers:(text,questionId,authorId,replyId,callback)=>{
+    sendMessageToMentionUsers:(text,questionId,authorId,replyId,commentId,callback)=>{
+        //不传replyId和commentId的情况
         if(typeof replyId == 'function'){
             callback = replyId;
             replyId = null;
+            commentId = null;
+        }
+        //不传commentId的情况
+        if(typeof commentId == 'function'){
+            callback = commentId;
+            commentId = null;
         }
         callback = callback || _.noop();
         User.getUserByNames(at.fetchUser(text),(err,users)=>{
@@ -54,7 +61,7 @@ const at = {
             //再创建对应的消息
             if(users.length != 0){
                 users.forEach((user)=>{
-                    message.sendAtMessage(user._id,questionId,authorId,replyId,(err,msg)=>{
+                    message.sendAtMessage(user._id,questionId,authorId,replyId,commentId,(err,msg)=>{
                         //成功的回调函数
                         if(err){
                             callback(err);
