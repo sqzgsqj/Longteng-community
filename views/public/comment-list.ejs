@@ -42,12 +42,12 @@
                         </a>
                     </span>
                 </div>
-                <form action="" style="background:none;padding:10px 0px">
+                <form class="hide" action="" style="background:none;padding:10px 0px;">
                     <div class="aw-comment-box-main">
                         <div class="comment_markdown" placeholder="回复某个人" contenteditable></div>
                         <div class="aw-comment-box-btn" style="display: block;">
                             <span class="pull-right">
-                                <a class="btn btn-default btn-success">
+                                <a class="commentBtn btn btn-default btn-success" disabled>
                                     评论
                                 </a>
                                 <a class="btn btn-primary close-comment-box">
@@ -59,13 +59,13 @@
                 </form>
             </div>
         </div>
-        <form action="" style="background:none;padding:10px 0px">
+        <form action="/<%= question._id %>/comment" style="background:none;padding:10px 0px">
+            <input type="hidden" name="reply_id" value="<%= reply._id %>">
+            <input type="hidden" name="comment_target_id" value="">
             <div class="aw-comment-box-main">
                 <div class="comment_markdown pull-left public" placeholder="请写下你的评论..." contenteditable></div>
                 <span class="pull-right">
-                    <a class="btn btn btn-success">
-                        评论
-                    </a>
+                    <input type="submit" class="commentBtn btn btn btn-success" disabled>
                 </span>
                 <div class="clearfix"></div>
             </div>
