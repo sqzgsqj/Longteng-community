@@ -80,7 +80,7 @@ MessageSchema.statics = {
     },
     //显示分页后的已读消息列表
     showMessagesPage:(user_id,startNum,limit,callback)=>{
-        Message.find({'target_id':user_id,'has_read':true}).sort({'create_time':'-1'}).populate('author_id').populate('target_id').populate('question_id').skip(startNum).limit(limit).exec(callback)
+        Message.find({'target_id':user_id,'has_read':true}).sort({'create_time':'-1'}).populate('author_id').populate('target_id').populate('question_id').populate('reply_id').skip(startNum).limit(limit).exec(callback)
     }
 }
 MessageSchema.plugin(BaseModel);

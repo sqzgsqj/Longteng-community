@@ -7,7 +7,7 @@
     </div>
     <div class="mod-body aw-feed-list">
         <% replies.forEach(function(reply,index){ %>
-        <div class="aw-item" id="<%= reply._id %>">
+        <div class="aw-item" id="<%= reply._id %>" off="true">
             <div class="mod-head">
                 <a class="aw-user-img aw-border-radius-5 pull-right" href="/user/<%= reply.author.name %>">
                     <img src="<%= reply.author.avatar %>">
@@ -40,7 +40,7 @@
                         </a>
                     </span>
                     <span class="operate">
-                        <a class="aw-add-comment">
+                        <a class="aw-add-comment" content="<%= reply.comment_num %>条评论">
                             <i class="fa fa-comment"></i>
                             <%= reply.comment_num %>条评论
                         </a>
