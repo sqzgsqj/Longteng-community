@@ -9,7 +9,7 @@ const jsxss      = require('xss');
 var md = new MarkdownIt();
 
 md.set({
-    html:         false,        // Enable HTML tags in source
+    html:         true,        // Enable HTML tags in source
     xhtmlOut:     false,        // Use '/' to close single tags (<br />)
     breaks:       false,        // Convert '\n' in paragraphs into <br>
     linkify:      true,        // Autoconvert URL-like text to links

@@ -76,6 +76,6 @@ router.post('/showMessagesPage/:page',auth.userRequired,message.showMessagesPage
 //**************************************回复*************************************
 router.post('/:question_id/reply',auth.userRequired,reply.add);//一级回复
 router.post('/:question_id/comment',auth.userRequired,comment.add)//二级回复
-
+router.get('/:reply_id/showComments',auth.userRequired,comment.show)//显示二级回复
 module.exports = router;
 

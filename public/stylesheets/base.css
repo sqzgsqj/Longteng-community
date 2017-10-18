@@ -35,6 +35,7 @@
     word-wrap: break-word;
     overflow-x: hidden;
     overflow-y: auto;
+    white-space: pre;
     background:rgb(247,248,250);
     transition: all 1s;
 }

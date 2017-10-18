@@ -83,6 +83,8 @@ exports.add = (req,res,next)=>{
             return comment;
         }).then(comment=>{
             //6.返回最新评论的页面
+            //如果有@某个人，给它加个连接
+            comment.content = at.linkUsers(comment.content);
             return res.render('comment-spa',{
                 comment:comment,
                 layout:''
@@ -91,4 +93,7 @@ exports.add = (req,res,next)=>{
             res.json({message:'出错了'});
         })
     }
+}
+exports.show = (req,res,next)=>{
+
 }

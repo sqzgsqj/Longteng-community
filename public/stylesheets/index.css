@@ -4249,7 +4249,7 @@ li.L1,li.L3,li.L5,li.L7,li.L9 {
 }
 
 .markitup-box p,#markItUpPreviewFrames p {
-    padding: 5px
+    /*padding: 5px*/
 }
 
 .markitup-box ol p,.markitup-box ul p,#markItUpPreviewFrames ol p,#markItUpPreviewFrames ol p {
