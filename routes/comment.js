@@ -40,23 +40,37 @@ exports.add = (req,res,next)=>{
             comment.reply_id.save();
             return comment;
         }).then(comment=>{
-            //4.如果在二级回复中@某个人，这个人上线的时候会接收到@消息
-            //3.给当前@的人发送消息，里面不包含作者以及一级回复的人
-            User.find({'_id':{$in:[comment.question_id.author,comment.reply_id.author]}}).then(authors=>{
-                let author_name = authors[0].name;
-                let reply_name = authors[1].name;
-                let regex1 = new RegExp('@' + author_name + '\\b(?!\\])', 'g');
-                let regex2 = new RegExp('@' + reply_name + '\\b(?!\\])', 'g');
-                let newContent = content.replace(regex1,'').replace(regex2,'');
-                at.sendMessageToMentionUsers(newContent,comment.question_id,comment.author,comment.reply_id,comment._id,(err,msg)=>{
-                    if(err){
-                        res.end(err);
+            //4.@某个人,这个人不能是文章作者，也不能是一级回复的作者
+            //这里，要考虑一个特殊情况，文章作者 == 一级回复的作者
+            let queryArray = [];
+            if(comment.question_id.author == comment.reply_id.author){
+                queryArray.push(comment.question_id.author);
+            }else{
+                queryArray.push(comment.question_id.author);
+                queryArray.push(comment.reply_id.author);
+            }
+            User.find({'_id':{$in:queryArray}}).then(authors => {
+                let newContent = null;
+                if(authors.length == 1){
+                    let author_name = authors[0].name;
+                    let regex1 = new RegExp('@' + author_name + '\\b(?!\ \])', 'g')
+                    newContent =  content.replace(regex1, '')
+                }else if(authors.length == 2){
+                    let author_name =  authors[0].name;
+                    let reply_name =  authors[1].name;
+                    let regex1 = new RegExp('@' + author_name + '\\b(?!\ \])', 'g')
+                    let regex2 = new RegExp('@' + reply_name + '\\b(?!\\])',  'g');
+                    newContent =  content.replace(regex1, '').replace(regex2, '');
+                }
+                at.sendMessageToMentionUsers(newContent,comment.question_id._id,  comment.author._id,comment.reply_id._id,comment._id,(err,msg)=>{
+                    if (err) {
+                        return res.end (err);
                     }
                 })
             })
             return comment;
         }).then(comment=>{
-            //给回复的目标发送有人评论了回复
+            //5.给回复的目标发送有人评论了回复
             //第一种情况，没有说明回复谁，默认是回复一级回复的作者
             //第二种情况，直接点击回复某个人
             if(comment.comment_target_id == null && comment.reply_id.author != req.session.user._id){
@@ -66,13 +80,15 @@ exports.add = (req,res,next)=>{
                 //给comment_targe_id对应的人发消息
                 message.sendCommentMessage(comment.comment_target_id,comment.author,comment.question_id,comment.reply_id,comment._id);
             }
+            return comment;
+        }).then(comment=>{
+            //6.返回最新评论的页面
+            return res.render('comment-spa',{
+                comment:comment,
+                layout:''
+            })
         }).catch(err=>{
             res.json({message:'出错了'});
         })
     }
-
-
-
-
-
 }

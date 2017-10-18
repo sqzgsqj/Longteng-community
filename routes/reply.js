@@ -40,7 +40,7 @@ exports.add = (req,res,next)=>{
                 let author_name = author.name;
                 let regex = new RegExp('@' + author_name + '\\b(?!\\])', 'g');
                 let newContent = content.replace(regex,'');
-                at.sendMessageToMentionUsers(newContent,reply.question_id,reply.author,reply._id,(err,msg)=>{
+                at.sendMessageToMentionUsers(newContent,reply.question_id._id,reply.author._id,reply._id,(err,msg)=>{
                     if(err){
                         res.end(err);
                     }

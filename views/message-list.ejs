@@ -35,6 +35,8 @@
                                    <% include public/unat %>
                                    <% }else if(message.type == 'reply'){%>
                                    <% include public/unreply %>
+                                   <%}else if(message.type == 'comment'){%>
+                                   <% include public/uncomment %>
                                    <%}%>
                                    <% }) %>
                                    <% }else{ %>
@@ -53,6 +55,8 @@
                                     <% include public/at %>
                                     <% }else if(message.type == 'reply'){ %>
                                     <% include public/reply %>
+                                    <%}else if(message.type == 'comment'){%>
+                                    <% include public/comment %>
                                     <%}%>
                                     <% }) %>
                                     <% include public/message-page %>
