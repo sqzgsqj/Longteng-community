@@ -68,3 +68,30 @@ exports.add = (req,res,next)=>{
         });
     }
 }
+exports.likes = (req,res,next)=>{
+        let reply_id = req.params.reply_id;
+        Reply.findOne({_id:reply_id}).then(reply=>{
+            let user_id = req.session.user._id;
+            if(reply.likes.indexOf(user_id)== -1){
+                reply.likes.push(user_id);
+                reply.save().then(result=>{
+                    res.json({num:result.likes.length});
+                })
+            }else {
+                Array.prototype.removeByValue = function(val) {
+                    for(var i=0; i<this.length; i++) {
+                        if(this[i] == val) {
+                            this.splice(i, 1);
+                            break;
+                        }
+                    }
+                }
+                reply.likes.removeByValue(user_id);
+                reply.save().then(result=>{
+                    res.json({num:result.likes.length});
+                })
+            }
+        }).catch(err=>{
+                res.end(err);
+        })
+}

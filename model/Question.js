@@ -97,10 +97,12 @@ QuestionSchema.statics = {
     getOtherQuestions:(author,question_id,callback)=>{
         Question.find({'author':author,'_id':{$nin:[question_id]}}).limit(5).sort({'last_reply_time':-1,'create_time':-1}).exec(callback)
     },
-    //通过ID来查询一个问题
+    //通过作者ID来查询一个问题
     getQuestionById:(id,callback)=>{
-        Question.findOne({'_id':id}).populate('author').exec(callback)
+        Question.find({'author':id}).populate('last_reply_author').exec(callback)
     }
+
+
 }
 QuestionSchema.plugin(BaseModel);
 const Question = mongoose.model('Question',QuestionSchema);

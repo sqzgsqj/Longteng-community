@@ -15,13 +15,64 @@ const setting = require('../setting');
 const mail = require('../common/mail');
 //引入权限的文件
 const auth = require('../common/auth');
+//引入Question表
+const Question = require('../model/Question');
+const FollewUser = require('../model/FollewUser');
 //首页的处理函数
 exports.index = (req,res,next)=>{
-    res.render('index',{
-        title:'首页',
-        //默认模板文件
-        layout:'indexTemplate'
+    let currentPage =Number(req.query.page) || 1;
+    let category = req.query.category || 'all';
+    let query = {};
+    if(!category || category === 'all'){
+        query.category ={$ne:'ask'};
+    }else{
+        query.category = category;
+    }
+    Question.find({category:query.category}).limit(5).skip((currentPage-1)*5).populate('last_reply_author').populate('author')
+        .then(result=>{
+        Question.find({category:query.category}).count().then(count=>{
+            User.find({}).sort({'score':-1}).limit(5).then(hotUsers=>{
+                // console.log(hotUsers)
+                res.render('index',{
+                    title:'首页',
+                    //默认模板文件
+                    layout:'indexTemplate',
+                    questions:result,
+                    count:count,
+                    hotUsers:hotUsers
+                })
+            })
+
+        })
     })
+}
+//首页的三大模块以及分页的处理
+exports.indexBody = (req,res,next)=>{
+    let currentPage =Number(req.query.page) || 1;
+    let category = req.query.category || 'all';
+    let query = {};
+    if(!category || category === 'all'){
+        query.category ={$ne:'ask'};
+    }else{
+        query.category = category;
+    }
+    Question.find({category:query.category}).limit(5).skip((currentPage-1)*5).populate('last_reply_author').populate('author')
+        .then(result=>{
+            Question.find({category:query.category}).count().then(count=>{
+                User.find({}).sort({'score':-1}).limit(5).then(hotUsers=>{
+                    // console.log(hotUsers)
+                    res.render('indexPage',{
+                        title:'首页',
+                        //默认模板文件
+                        layout:'',
+                        questions:result,
+                        count:count,
+                        hotUsers:hotUsers
+                    })
+                })
+
+            })
+        })
 }
 //注册页面的处理函数
 exports.register = (req,res,next)=>{
@@ -77,7 +128,20 @@ exports.postRegister = (req,res,next)=>{
                 })
                 let newPSD = DBSet.encrypt(password,setting.psd);
                 req.body.password = newPSD;
-                DBSet.addOne(User,req,res,'success');
+                let followUser = new FollewUser();
+                followUser.follow_id ;
+                followUser.following_id ;
+
+
+                followUser.save().then(result=>{
+                    let user = new User();
+                    user.name = name;
+                    user.password = newPSD;
+                    user.email =email;
+                    user.eachother = result._id;
+
+                    DBSet.addOne(user,req,res,'success');
+                });
             }
         }).catch(err=>{
             res.end(err);
@@ -120,15 +184,19 @@ exports.postLogin = (req,res,next)=>{
         }else{
             getUser = User.getUserByName
         }
+        console.log(name);
         getUser(name,(err,user)=>{
             if(err){
+
                 return res.end(err);
             }
             if(!user){
                 return res.end('该用户名/邮箱不存在');
             }
-            //最后一步，比较密码了
+            // 最后一步，比较密码了
             let newPSD = DBSet.encrypt(password,setting.psd);
+            console.log(newPSD);
+            console.log(user.password);
             if(user.password != newPSD){
                 return res.end('密码错误,请重新输入');
             }

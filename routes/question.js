@@ -65,11 +65,34 @@ exports.postCreate = (req,res,next)=>{
 }
 //编辑问题的处理函数
 exports.edit = (req,res,next)=>{
-
+    let question_id = req.params.id;
+    // console.log(question_id);
+    Question.getFullQuestion(question_id,(err,article)=>{
+        console.log(article);
+        res.render('edit-question',{
+            title:'新建问题',
+            layout:'indexTemplate',
+            categorys:setting.categorys,
+            question:article
+        })
+    })
 }
 //编辑行为的处理函数
 exports.postEdit = (req,res,next)=>{
-
+    let question_id = req.params.id;
+    let title = validator.trim(req.body.title);
+    let category = validator.trim(req.body.category);
+    let content = validator.trim(req.body.content);
+    Question.getFullQuestion(question_id,(err,article)=>{
+        let question = new Question(article);
+        question.content = content;
+        question.title = title;
+        question.category = category;
+        question.save().then(result=>{
+            // console.log(result);
+        })
+        res.json({url:`/question/${question._id}`})
+    })
 }
 //删除行为的处理函数
 exports.delete = (req,res,next)=>{
@@ -104,22 +127,95 @@ exports.index = (req,res,next)=>{
         question.save();
         //来获取文章对应的所有的回复
         //reply表
-        Reply.getRepliesByQuestionId(question._id,(err,replies)=>{
+        Reply.getRepliesByQuestionIdFive(question._id,(err,replies)=>{
             if(replies.length > 0){
                 replies.forEach((reply,index)=>{
                     reply.content = at.linkUsers(reply.content)
                 })
             }
             Question.getOtherQuestions(question.author._id,question._id,(err,questions)=>{
-                return res.render('question',{
-                    title:'问题详情页面',
-                    layout:'indexTemplate',
-                    question:question,
-                    others:questions,
-                    replies:replies
-                })
+                User.findOne({_id:currentUser._id}).then(result=>{
+                    let followQ = false;
+                    if(result.followQustion.indexOf(question_id) == -1){
+                        followQ = true;
+                    }
+                    return followQ;
+                }).then(followQ=>{
+                    return res.render('question',{
+                        title:'问题详情页面',
+                        layout:'indexTemplate',
+                        question:question,
+                        others:questions,
+                        replies:replies,
+                        currentUser:currentUser,
+                        followQ:followQ
+                    })
+                }).catch(err=>{
+                    console.log(err)
+                });
+
             })
         })
+    })
+}
+exports.padingPageOne = (req,res,next)=>{
+    let question_id = req.params.question_id;
+    Reply.getRepliesByQuestionId(question_id,(err,replis)=>{
+        return res.render('replyOnePage',{
+            layout:'',
+            replies:replis
+        });
+    })
+}
+//用户关注取关文章
+exports.questionAttention = (req,res,next)=>{
+
+    let question_id = req.params.question_id;
+    let user_id = req.session.user._id;
+    Question.findOne({_id:question_id}).then(question=> {
+        if(question.author==user_id){
+            return res.json({num: question.follow_num});
+        }else {
+            User.findOne({_id:user_id}).then(user=>{
+                let off = user.followQustion.indexOf(question_id) == -1;
+                let aa = {a:user,b:off};
+                return aa;
+            }).then(off=>{
+                let user =  off.a;
+                if(off.b) {
+                    user.followQustion.push(question_id);
+                    user.save();
+                    Question.findOne({_id:question_id}).then(question=> {
+                        question.follow_num += 1;
+                        question.save();
+                        return res.json({num: question.follow_num});
+                    }).catch(err => {
+                        res.end('关注出错')
+                    })
+                }else {
+                    Array.prototype.removeByValue = function(val) {
+                        for(var i=0; i<this.length; i++) {
+                            if(this[i] == val) {
+                                this.splice(i, 1);
+                                break;
+                            }
+                        }
+                    }
+
+                    user.followQustion.removeByValue(question_id);
+                    user.save();
+                    Question.findOne({_id:question_id}).then(question=>{
+                        question.follow_num -=1;
+                        question.save();
+                        return res.json({num:question.follow_num});
+                    }).catch(err=>{
+                        res.end('取消关注出错');
+                    })
+                }
+            }).catch(err=>{
+                res.end(err);
+            })
+        }
 
     })
 

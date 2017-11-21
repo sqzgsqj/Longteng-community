@@ -63,13 +63,26 @@ const UserSchema = new Schema({
     reply_count:{
         type:Number,
         default:0
+    },
+    //人物互相关注表
+    eachother:{
+        type:String,
+        ref:'FollowUser'
+    },
+    //用户关注的问题
+    followQustion:{
+        type:[],
+        ref:'Question'
     }
 })
 //给这个User表添加静态方法
 UserSchema.statics = {
     getUserByName:(name,callback)=>{
-        User.findOne({name:name},callback)
+        // console.log(name);
+        User.findOne({name:name}).populate('eachother').exec(callback);
+        // User.find({name:name}).populate('eachother').exec(callback);
     },
+
     getUserByEmail:(email,callback)=>{
         User.findOne({email:email},callback)
     },
@@ -80,7 +93,10 @@ UserSchema.statics = {
         if(names.length == 0){
             return callback(null,[]);
         }
-        User.find({name:{$in:names}},callback);
+        User.find({name:{$in:names}}).populate('eachother').exec(callback);
+    },
+    getUserByNameEacheother:(user_id,callback)=>{
+        User.findOne({name:user_id}).populate('eachother').exec(callback);
     }
 }
 UserSchema.plugin(BaseModel);

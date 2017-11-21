@@ -21,6 +21,8 @@ const comment = require('./routes/comment');
 //************************************首页***************************************
 //首页的路由
 router.get('/',home.index);
+//首页的分页和三大模块处理
+router.get('/indexBody',home.indexBody);
 //注册页面的路由
 router.get('/register',auth.userNotRequired,home.register);
 //登录页面的路由
@@ -76,6 +78,13 @@ router.post('/showMessagesPage/:page',auth.userRequired,message.showMessagesPage
 //**************************************回复*************************************
 router.post('/:question_id/reply',auth.userRequired,reply.add);//一级回复
 router.post('/:question_id/comment',auth.userRequired,comment.add)//二级回复
-router.get('/:reply_id/showComments',auth.userRequired,comment.show)//显示二级回复
+router.get('/:reply_id/:number/showComments',auth.userRequired,comment.show)//显示二级回复
+router.get('/:question_id/PageOne',auth.userRequired,question.padingPageOne)//一级回复分页
+
+// *************************************关注点赞**************************************************
+router.get('/attention',auth.userRequired,user.userAttention)//用户与用户之间的关注
+router.get('/removeAttention',auth.userRequired,user.userRemoveAttention)//用户之间取消关注
+router.get('/attQustion/:question_id',auth.userRequired,question.questionAttention)//用户关注取关文章
+router.get('/like/:reply_id',auth.userRequired,reply.likes)//一级评论点赞
 module.exports = router;
 

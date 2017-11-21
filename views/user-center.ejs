@@ -1,0 +1,180 @@
+<div class="aw-container-wrap">
+    <div class="container">
+        <div class="row">
+            <div class="aw-content-wrap clearfix">
+                <div class="col-sm-12 col-md-9 aw-main-content">
+                    <div class="aw-mod aw-user-detail-box">
+                        <div class="mod-head">
+                            <img src="<%= user.avatar %>">
+                            <span class="pull-right operate  eachother" target="<%= attention %>" target2="<%= user.name %>">
+                                <a href="#" class="follow btn btn-normal btn-success">
+                                    <% if(attention){ %>
+                                    <span>关注</span>
+                                    <% } else { %>
+                                    <span>取消关注</span>
+                                    <% } %>
+                                    <em>|</em>
+                                    <% if(user.eachother.follow_id.length>0){%>
+                                    <b class="bbbbbb"><%= user.eachother.follow_id.length%></b>
+                                    <%} else{%>
+                                    <b class="bbbbbb">0</b>
+                                    <%}%>
+                                </a>
+                            </span>
+                            <h1><%= user.name %></h1>
+                            <p class="text-color-999"><%= user.motto %></p>
+                            <p class="aw-user-flag"></p>
+                        </div>
+                        <div class="mod-body">
+                            <div class="meta">
+                                <span>
+                                    <i class="fa fa-bar-chart-o"></i>
+                                    积分:
+                                    <em class="aw-text-color-orange"><%= user.score %></em>
+                                </span>
+                                <span>
+                                    注册时间:
+                                    <em class="aw-text-color-orange"><%= user.create_time_ago()%></em>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="mod-footer">
+                            <ul class="nav nav-tabs aw-nav-tabs hidden-xs">
+                                <li class="active">
+                                    <a href="#questions" data-toggle="tab">
+                                        发问
+                                        <span class="badge"><%= articles.length %></span>
+                                    </a>
+                                </li>
+                                <li class>
+                                    <a href="#replys" data-toggle="tab">
+                                        回复
+                                        <span class="badge"><%= replies.length %></span>
+                                    </a>
+                                </li>
+                                <li class>
+                                    <a href="#focus" data-toggle="tab">关注</a>
+                                </li>
+                                <li class>
+                                    <a href="#actions" data-toggle="tab">动态</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="aw-user-center-tab">
+                        <div class="tab-content">
+                            <!--提问-->
+                            <div class="tab-pane active" id="questions">
+                                <div class="aw-mod">
+                                    <div class="mod-head">
+                                        <h3>
+                                            <a class="pull-right aw-more-content" href="/user/<%= user.name %>/questions">
+                                                更多
+                                            </a>
+                                            发问
+                                        </h3>
+                                    </div>
+                                    <div class="mod-body">
+                                        <div class="aw-profile-publish-list">
+                                            <% articles.forEach(function(article){%>
+                                            <div class="aw-item">
+                                                <div class="mod-head">
+                                                    <h4>
+                                                        <a href="/question/<%= article._id %>">
+                                                            <%= article.title %>
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <div class="mod-body">
+                                                    <span class="aw-border-radius-5 count pull-left">
+                                                        <i class="fa fa-comment-o"></i><%= article.comment_num %>
+                                                    </span>
+                                                    <p class="aw-hide-txt">
+                                                        <%= article.click_num %> 次浏览  • 0 个关注   • <%= article.create_time_ago()%>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <%})%>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--提问-->
+                            <!--回复-->
+                            <div class="tab-pane" id="replys">
+                                <div class="aw-mod">
+                                    <div class="mod-head">
+                                        <h3>
+                                            <a class="pull-right" href="/user/<%= user.name %>/replys">更多</a>
+                                            回复
+                                        </h3>
+                                    </div>
+                                    <div class="mod-body">
+                                        <div class="aw-profile-answer-list">
+                                            <% replies.forEach(function(reply){%>
+                                            <div class="aw-item">
+                                                <div class="mod-head">
+                                                    <h4>
+                                                        <a href="/question/<%= reply.question_id._id %>#<%= reply._id %>">
+                                                            <%= reply.question_id.title %>
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <div class="mod-body">
+                                                    <span class="aw-border-radius-5 count pull-left">
+                                                        <i class="fa fa-thumbs-o-up"></i> 0
+                                                    </span>
+                                                    <div class="aw-hide-txt">
+                                                        <%- markdown(reply.content) %>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <%})%>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--回复-->
+                            <!--关注-->
+                            <div class="tab-pane" id="focus">
+                                <div class="aw-mod">
+
+                                </div>
+                            </div>
+                            <!--关注-->
+                            <!--动态-->
+                            <div class="tab-pane" id="actions">
+                                <div class="aw-mod">
+
+                                </div>
+                            </div>
+                            <!--动态-->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-3 aw-side-bar">
+                    <div class="aw-mod people-following">
+                        <a class="pull-right font-size-12">更多</a>
+                        <span>
+                            关注
+                            <em class="aw-text-color-orange">2</em>人
+                        </span>
+                        <p>
+                            <a class="aw-user-name" href="#"><img src="/images/avatar-mid-img.png"></a>
+                        </p>
+                    </div>
+                    <div class="aw-mod people-following">
+                        <div class="mod-body">
+                            <a class="pull-right font-size-12">更多</a>
+                            <span>
+                                被<em class="aw-text-color-green">2</em>人关注
+                            </span>
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

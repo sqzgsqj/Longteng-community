@@ -18,9 +18,13 @@
                     <div class="aw-mod aw-question-detail">
                         <div class="mod-head">
                             <h1><%= question.title %></h1>
-                            <div class="operate clearfix">
-                                <a href="#" class="follow btn btn-normal btn-success pull-left ">
-                                    <span>关注</span> <em>|</em> <b>2</b>
+                            <div class="operate clearfix followQ2" target="<%= followQ %>" target2="<%= question._id%>" >
+                                <a href="#" class="followQ btn btn-normal btn-success pull-left " >
+                                    <% if(followQ){%>
+                                    <span>关注</span> <em>|</em> <b><%=question.follow_num%></b>
+                                    <%}else{%>
+                                    <span>取消关注</span> <em>|</em> <b><%=question.follow_num%></b>
+                                    <%}%>
                                 </a>
                             </div>
                         </div>
@@ -38,13 +42,25 @@
                                 <a class="text-color-999">
                                     <i class="fa fa-envelope-o"></i>&nbsp;邀请
                                 </a>
+                                <% if(question.author._id == currentUser._id){%>
+                                <a class="text-color-999 Aedit" href="/question/<%= question._id%>/edit">
+                                    <i class="fa fa-edit"></i>&nbsp;编辑
+                                </a>
+                                <a class="text-color-999  delete">
+                                    <span target1="<%= question._id %>"></span>
+                                    <i class="fa fa-trash"></i>&nbsp;删除
+                                </a>
+                                <%}%>
                                 <div class="pull-right more-operate">
                                     <a href="#" class="text-color-999">
                                         <i class="fa fa-heart-o"></i>&nbsp;感谢
                                     </a>
-                                    <a href="#" class="text-color-999">
+                                    <a href="javascript:void(0)" class="text-color-999 share">
                                         <i class="fa fa-paper-plane"></i>&nbsp;分享
                                     </a>
+                                    <div class="share-demo">
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -127,3 +143,14 @@
         </div>
     </div>
 </div>
+<!--<link rel="stylesheet" href="/stylesheets/share.css">-->
+<!--引入分享的js-->
+<script type="text/javascript" src="/javascripts/share.js"></script>
+<script  type="text/javascript">
+    $('.share').shareConfig({
+        Shade : true, //是否显示遮罩层
+        Event:'click', //触发事件
+        Content : 'Share', //内容DIV ID
+        Title : '我爱分享' //显示标题
+    });
+</script>

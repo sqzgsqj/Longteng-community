@@ -1,0 +1,70 @@
+
+<% comments.forEach(function(comment){ %>
+<div class="aw-item">
+    <div class="mod-head">
+        <a class="anchor"></a>
+        <a class="aw-user-img aw-border-radius-5 pull-right" href="#">
+            <img src="<%= comment.author.avatar%>">
+        </a>
+        <div class="title">
+            <p>
+                <% if(comment.comment_target_id){%>
+                <a name='<%= comment.author.name%>'class="aw-user-name" href="/user/<%= comment.author.name%>">
+                    <%= comment.author.name %>
+                </a>
+                回复了
+                <a class="aw-user-name" href="/user/<%= comment.comment_target_id.name %>">
+                    <%= comment.comment_target_id.name%>
+                </a>
+                <%}else{%>
+                <a name="<%= comment.author.name %>" class="aw-user-name" href="/user/<%= comment.author.name%>">
+                    <%= comment.author.name %>
+                </a>
+                <%}%>
+
+            </p>
+        </div>
+    </div>
+    <div class="mod-body clearfix">
+        <div class="markitup-box">
+            <%- markdown(comment.content)%>
+        </div>
+    </div>
+    <div class="mod-footer">
+        <div class="meta clearfix">
+
+                    <span class="operate">
+                        <a class="aw-show-comment">
+                            回复
+                        </a>
+                    </span>
+                    <span class="text-color-999 pull-right" >
+                        <%= comment.create_time_ago()%>
+                    </span>
+        </div>
+        <form class="hide" action="/<%= comment.question_id._id%>/comment" style="background:none;padding:10px 0px;">
+            <input type="hidden" name="reply_id" value="<%= comment.reply_id %>">
+            <input type="hidden" name="comment_target_id" value="<%= comment.author._id %>">
+            <div class="aw-comment-box-main">
+                <div class="comment_markdown" placeholder="回复某个人" contenteditable></div>
+                <div class="aw-comment-box-btn" style="display: block;">
+                      <span class="pull-right">
+                                <input class="commentBtn btn btn-default btn-success commentBtn-two" type="submit" disabled/>
+                                <a class="btn btn-primary close-comment-box">
+                                    取消
+                                </a>
+                      </span>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<% }) %>
+
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        <% for(var i=1;i<=Math.ceil(count/5);i++){%>
+        <li target="<%= i %>" class="two-page"><a href="#" ><%= i %></a></li>
+        <%}%>
+    </ul>
+</nav>

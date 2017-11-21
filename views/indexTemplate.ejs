@@ -11,6 +11,10 @@
     <link rel="stylesheet" href="/stylesheets/base.css">
     <!--再引入我自己的CSS样式-->
     <link rel="stylesheet" href="/stylesheets/index.css">
+    <!--引入分享的的css-->
+    <link rel="stylesheet" href="/stylesheets/share.css">
+    <!--引入分享的js-->
+    <!--<script type="text/javascript" src="/javascripts/share.js"></script>-->
     <!--动态的引入某个页面的静态资源-->
     <link rel="stylesheet" href="<%= locals.resource %>" />
     <!--引入jquery-->
@@ -36,7 +40,7 @@
     <div class="container">
         <!--logo-->
         <div class="aw-logo hidden-xs">
-            <a href="http://localhost:5000"></a>
+            <a href="http://localhost:3000"></a>
         </div>
         <!--logo-->
         <!--导航-->
@@ -111,14 +115,19 @@
         <% }%>
     </div>
 </div>
+<div class="indexBody">
 <%- body %>
+</div>
 <footer class="footer">
     <div class="container">
         <div class="col-sm-6 col-lg-6">
             <h4>
-                <img src="/images/zhiyou.png">
+                <!--<img src="/images/dongfang.png">-->
             </h4>
-            <p>本网站所有的解释权归智游教育集团,由教学部nodeJS组成员整理,不允许任何人以任何目的进行传播和商业运作</p>
+            <p>本网站正在完善过程中，目前支持发表·编辑·删除文章，一二级评论，@他人，用户互关等，其他功能正在玩命开发。
+             开发技术NodeJS + Express + Promise + Async + ES6 + angular + Webpack + MongoDB + Redis + Markdown等
+            </p>
+            <p>本站最终解释权归陈永龙所有，严谨私自转载或做为商业用途</p>
         </div>
         <div class="col-sm-6 col-lg-5 col-lg-offset-1">
             <div class="row about">
@@ -140,8 +149,8 @@
                 <div class="col-xs-4">
                     <h4>旗下网站</h4>
                     <ul class="list-unstyled">
-                        <li><a href="http://www.zhiyou100.com">智游集团</a></li>
-                        <li><a href="#">李志远的个人博客</a></li>
+                        <li><a href="#">Node.js社区</a></li>
+                        <li><a href="#"> CSND </a></li>
                     </ul>
                 </div>
             </div>
@@ -149,7 +158,7 @@
     </div>
     <div class="footer-bottom">
         <ul class="list-inline text-center">
-            <li>本网站的所有权归智游集团教学部nodeJS组成员李志远所有</li>
+            <li>自信 · 乐观 · 向上，是我一贯的追求</li>
         </ul>
     </div>
 </footer>

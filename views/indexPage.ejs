@@ -1,0 +1,26 @@
+<% questions.forEach(question=>{ %>
+<div class="aw-item">
+    <a class="aw-user-name hidden-xs" href="/user/<%= question.author.name%>"><img src="<%= question.author.avatar%>"></a>
+    <div class="aw-question-content">
+        <h4>
+            <a href="/question/<%= question._id%>"><%= question.title%></a>
+        </h4>
+        <% if(question.last_reply_author){%>
+        <div>
+            <a href="#"  class=" text-color-999 "></a>
+        </div>
+        <%}%>
+
+        <div>
+            <a href="#" class="pull-right text-color-999 ">回复</a>
+        </div>
+        <p>
+            <a href="/user/<%= question.author.name%>" class="aw-user-name"><%= question.author.name%></a>
+            <span class="text-color-999">
+            发起了问题 • <%= question.follow_num %>人关注 • <%= question.comment_num %> 个回复 •<%= question.click_num %> 次浏览 • <%= question.update_time_ago()%>
+            </span>
+        </p>
+    </div>
+</div>
+
+<% })%>

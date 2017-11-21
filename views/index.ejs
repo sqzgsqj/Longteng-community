@@ -5,58 +5,51 @@
                 <div class="col-sm-12 col-md-9 aw-main-content">
                     <!--文章的检索-->
                     <ul class="nav nav-tabs aw-nav-tabs active hidden-xs">
-                        <li><a href="#">热门</a></li>
-                        <li><a href="#">推荐</a></li>
-                        <li class="active"><a href="#">最新</a></li>
+                        <li class=""><a href="/?category=share">分享</a></li>
+                        <li class=""><a href="/?category=ask">问答</a></li>
+                        <li class=""><a href="/?category=job">招聘</a></li>
                         <h2 class="hidden-xs"><i class="fa fa-bars"></i> 发现</h2>
                     </ul>
                     <!--文章的检索-->
                     <!--文章列表-->
                     <div class="aw-mod aw-explore-list">
                         <div class="mod-body">
-                            <div class="aw-common-list">
+                            <div class="aw-common-list abc">
+                                <% questions.forEach(question=>{ %>
                                 <div class="aw-item">
-                                    <a class="aw-user-name hidden-xs" href="#"><img src="/images/avatar-max-img.png"></a>
+                                    <a class="aw-user-name hidden-xs" href="/user/<%= question.author.name%>"><img src="<%= question.author.avatar%>"></a>
                                     <div class="aw-question-content">
                                         <h4>
-                                            <a href="/question/1">文章的标题</a>
+                                            <a href="/question/<%= question._id%>"><%= question.title%></a>
                                         </h4>
-                                        <a href="#"  class="pull-right text-color-999">回复</a>
-                                        <p>
-                                            <a href="#" class="aw-user-name">作者</a>
-                                            <span class="text-color-999">
-                                                发起了问题 • 1 人关注 • 0 个回复 • 9 次浏览 • 3 小时前
-                                            </span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="aw-item">
-                                    <a class="aw-user-name hidden-xs" href="#"><img src="/images/avatar-max-img.png"></a>
-                                    <div class="aw-question-content">
-                                        <h4>
-                                            <a href="/question/2">文章的标题</a>
-                                        </h4>
-                                        <div class="pull-right hidden-xs contribute">
-                                            <span class="pull-right text-color-999">贡献</span>
-                                            <a class="aw-user-name" href="#"><img src="/images/avatar-max-img.png"></a>
+                                        <% if(question.last_reply_author){%>
+                                        <div>
+                                            <a href="#"  class=" text-color-999 "></a>
+                                        </div>
+                                        <%}%>
+
+                                        <div>
+                                        <a href="#" class="pull-right text-color-999 ">回复</a>
                                         </div>
                                         <p>
-                                            <a href="#" class="aw-user-name">作者</a>
+                                            <a href="/user/<%= question.author.name%>" class="aw-user-name"><%= question.author.name%></a>
                                             <span class="text-color-999">
-                                                发起了问题 • 1 人关注 • 0 个回复 • 9 次浏览 • 3 小时前
+                                                发起了问题 • <%= question.follow_num %>人关注 • <%= question.comment_num %> 个回复 •<%= question.click_num %> 次浏览 • <%= question.update_time_ago()%>
                                             </span>
                                         </p>
                                     </div>
                                 </div>
+                               <% })%>
                             </div>
                         </div>
                         <div class="mod-footer">
                             <div class="page-control">
                                 <ul class="pagination pull-right">
-                                    <li class="active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
+                                    <% for(var i = 1;i<=Math.ceil(count/5);i++){%>
+                                    <li class="indexPage " target="/indexBody?category=<%=questions[0].category%>&page=<%= i %>">
+                                        <a href="#" ><%= i %></a>
+                                    </li>
+                                    <%}%>
                                 </ul>
                             </div>
                         </div>

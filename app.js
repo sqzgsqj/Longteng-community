@@ -68,7 +68,7 @@ app.use((err, req, res, next) => {
   res.render('error');
 });
 _.extend(app.locals,require('./common/markdown'));
-app.listen(5000,()=>{
+app.listen(3000,()=>{
   console.log('node is OK');
 })
 module.exports = app;

@@ -16,15 +16,14 @@ mongoose.connect(`mongodb://${setting.host}/${setting.db}`,{
 });
 const DBSet = {
     //通用的新增方法
-    addOne:(obj,req,res,logMsg)=>{
-        let newObj = new obj(req.body);
-        newObj.save().then(result=>{
+    addOne:(user,req,res,logMsg)=>{
+        // console.log(req.body);
+        user.save().then(result=>{
             res.end(logMsg);
         }).catch(err=>{
             res.end(err);
         })
-    },
-    //删除的通用方法
+    },   //删除的通用方法
     delOne:(obj,req,res,logMsg)=>{
         let url = url.parse(req.url,true);
         let targetId = url.params.query.id;

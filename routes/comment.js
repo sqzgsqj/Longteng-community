@@ -21,6 +21,7 @@ exports.add = (req,res,next)=>{
     let question_id = req.params.question_id;//问题的ID
     let author = req.session.user._id; //作者
     //内容长度不能为空
+    console.log(111);
     if(content.length <= 0){
         res.json({message:'长度不能为空'});
     }else{
@@ -35,11 +36,14 @@ exports.add = (req,res,next)=>{
             let result = Comment.findOne({'_id':comment._id}).populate('reply_id').populate('comment_target_id').populate('question_id').populate('author');
             return result;
         }).then(comment=>{
+            // console.log(comment.reply_id)
             //3.一级回复有个字段comment_num + 1
             comment.reply_id.comment_num += 1
             comment.reply_id.save();
+
             return comment;
         }).then(comment=>{
+
             //4.@某个人,这个人不能是文章作者，也不能是一级回复的作者
             //这里，要考虑一个特殊情况，文章作者 == 一级回复的作者
             let queryArray = [];
@@ -68,8 +72,10 @@ exports.add = (req,res,next)=>{
                     }
                 })
             })
+
             return comment;
         }).then(comment=>{
+
             //5.给回复的目标发送有人评论了回复
             //第一种情况，没有说明回复谁，默认是回复一级回复的作者
             //第二种情况，直接点击回复某个人
@@ -85,6 +91,7 @@ exports.add = (req,res,next)=>{
             //6.返回最新评论的页面
             //如果有@某个人，给它加个连接
             comment.content = at.linkUsers(comment.content);
+
             return res.render('comment-spa',{
                 comment:comment,
                 layout:''
@@ -95,5 +102,22 @@ exports.add = (req,res,next)=>{
     }
 }
 exports.show = (req,res,next)=>{
-
+    //一级回复的ID，查出对应的二级回复
+    let page = (req.params.number-1)*5;
+    let reply_id = req.params.reply_id;
+    Comment.getCommentsByReplyId(reply_id,page,(err,comments)=>{
+        if(err){
+            res.end(err);
+        }
+        Comment.getCommentsByReplyIdCount(reply_id,(err,count)=>{
+            if(err){
+                res.end(err);
+            }
+            res.render('comments',{
+                layout:'',
+                comments:comments,
+                count:count
+            })
+        })
+    })
 }

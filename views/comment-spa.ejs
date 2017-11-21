@@ -4,11 +4,22 @@
         <a class="aw-user-img aw-border-radius-5 pull-right" href="/user/<%= comment.author.name %>">
             <img src="<%= comment.author.avatar %>">
         </a>
+        <!--.---------------这是二级回复内容的页面--------------------------->
         <div class="title">
             <p>
+                <% if(comment.comment_target_id){%>
                 <a class="aw-user-name" href="/user/<%= comment.author.name %>">
                     <%= comment.author.name %>
                 </a>
+                回复了
+                <a class="aw-user-name" href="/user/<%= comment.comment_target_id.name %>">
+                    <%= comment.comment_target_id.name %>
+                </a>
+                <%}else{%>
+                <a class="aw-user-name" href="/user/<%= comment.author.name %>">
+                    <%= comment.author.name %>
+                </a>
+                <%}%>
             </p>
         </div>
     </div>

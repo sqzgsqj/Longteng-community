@@ -6,18 +6,18 @@
     <div class="mod-body">
         <dl>
             <dt class="pull-left aw-border-radius-5">
-                <a href="#"><img src="/images/default-avatar.jpg"></a>
+                <a href="/user/<%= user.name %>"><img src="<%= user.avatar%>"></a>
             </dt>
             <dd class="pull-left">
-                <a class="aw-user-name" href="#">
-                    用户名
+                <a class="aw-user-name" href="/user/<%= user.name %>">
+                    <%= user.name %>
                 </a>
-                <a href="#" class="pull-right">更多</a>
+                <a href="/user/<%= user.name %>" class="pull-right">更多</a>
             </dd>
         </dl>
     </div>
     <div class="mod-footer">
-        这家伙很懒，什么都没有留下...
+        <%= user.motto %>
     </div>
 </div>
 <%}%>

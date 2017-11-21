@@ -12,6 +12,7 @@
                 <a class="aw-user-img aw-border-radius-5 pull-right" href="/user/<%= reply.author.name %>">
                     <img src="<%= reply.author.avatar %>">
                 </a>
+ <!-----------------------------------------------这是一级回复的页面------------------------------------------------>
                 <div class="title">
                     <p>
                         <a class="aw-user-name" href="/user/<%= reply.author.name %>">
@@ -30,13 +31,10 @@
                     <span class="text-color-999 pull-right">
                         <%= reply.create_time_ago() %>
                     </span>
-                    <span class="operate">
-                        <a class="agree">
+                    <span class="operate likes" target="<%= reply._id %>">
+                        <a class="agree like">
                             <i class="fa fa-thumbs-o-up"></i>
-                            <b class="count">0</b>
-                        </a>
-                        <a class="disagree">
-                            <i class="fa fa-thumbs-o-down"></i>
+                            <b class="count"><%= reply.likes.length %></b>
                         </a>
                     </span>
                     <span class="operate">
@@ -52,6 +50,8 @@
         </div>
         <% }) %>
     </div>
+
+    <div class="bb" target="<%= question._id%>"><a class="center-block  aa" href="#">加载更多</a></div>
     <div class="mod-footer"></div>
 </div>
 <% } %>

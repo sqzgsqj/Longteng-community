@@ -1,0 +1,69 @@
+<% replies.forEach(function(reply,index){ %>
+<div class="aw-item" id="<%= reply._id %>" off="true">
+    <div class="mod-head">
+        <a class="aw-user-img aw-border-radius-5 pull-right" href="/user/<%= reply.author.name %>">
+            <img src="<%= reply.author.avatar %>">
+        </a>
+        <!-----------------------------------------------这是一级回复的页面------------------------------------------------>
+        <div class="title">
+            <p>
+                <a class="aw-user-name" href="/user/<%= reply.author.name %>">
+                    <%= reply.author.name %>
+                </a>
+            </p>
+        </div>
+    </div>
+    <div class="mod-body clearfix">
+        <div class="markitup-box">
+            <%- markdown(reply.content) %>
+        </div>
+    </div>
+    <div class="mod-footer">
+        <div class="meta clearfix">
+                    <span class="text-color-999 pull-right">
+                        <%= reply.create_time_ago() %>
+                    </span>
+            <span class="operate">
+                        <a class="agree">
+                            <i class="fa fa-thumbs-o-up"></i>
+                            <b class="count">0</b>
+                        </a>
+                        <a class="disagree">
+                            <i class="fa fa-thumbs-o-down"></i>
+                        </a>
+                    </span>
+            <span class="operate">
+                        <a class="aw-add-comment" content="<%= reply.comment_num %>条评论">
+                            <i class="fa fa-comment"></i>
+                            <%= reply.comment_num %>条评论
+                        </a>
+                    </span>
+        </div>
+        <!--二级回复的位置在这里-->
+        <div class="aw-comment-box hide">
+            <div class="aw-comment-list" style="border-bottom:0;">
+                <div align="center" class="aw-padding10" style="border-bottom:1px solid #F5F5F5;">
+                    <p><%= reply.comment_num %>条评论</p>
+                    <!----------------------------这个是点击评论出来的二级回复页面------------------------------>
+                </div>
+                <div class="loading text-center" style="font-size:30px;line-height:50px;">
+                    <i class="fa fa-spinner fa-pulse"></i>
+                </div>
+                <!--二级回复要插入的位置-->
+                <div class="add-comment-list"></div>
+                <form action="/<%= reply.question_id %>/comment" style="background:none;padding:10px 0px">
+                    <input type="hidden" name="reply_id" value="<%= reply._id %>">
+                    <input type="hidden" name="comment_target_id" value="">
+                    <div class="aw-comment-box-main">
+                        <div style="white-space: pre" class="comment_markdown pull-left public" placeholder="请写下你的评论..." contenteditable="true"></div>
+                        <span class="pull-right">
+                    <input type="submit" class="commentBtn btn btn btn-success commentBtn-one" disabled>
+                </span>
+                        <div class="clearfix"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<% }) %>

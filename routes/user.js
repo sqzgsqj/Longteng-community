@@ -10,6 +10,8 @@ const gm = require('gm');
 //引入User
 const User = require('../model/User');
 const validator = require('validator');
+const Question = require('../model/Question');
+const Reply = require('../model/Reply')
 //个人设置的处理函数
 exports.setting = (req,res,next)=>{
     res.render('setting',{
@@ -101,6 +103,44 @@ exports.all = (req,res,next)=>{
 //个人信息
 exports.index = (req,res,next)=>{
 
+    let username = req.params.name;
+    // console.log(username);
+    //1.通过username查询出user的信息
+    //2.通过username查询出question问题表的信息
+    //3.通过username查询出回复表的信息
+    //第一步
+    User.getUserByName(username,(err,user)=>{
+        // console.log(user);
+        if(err){
+            res.end(err);
+        }
+        //第二步
+        Question.getQuestionById(user._id,(err,articles)=>{
+            if(err){
+                res.end(err);
+            }
+            Reply.getRepliesByAuthor(user._id,(err,replies)=>{
+                if(err){
+                    res.end(err);
+                }
+                let  attention = false;
+                let  sessionusername = req.session.user.name;
+                if(user.eachother.follow_id.indexOf(sessionusername) == -1){
+                      attention = true;
+                }
+
+                return res.render('user-center',{
+                    title:'个人中心--社区问答系统',
+                    layout:'indexTemplate',
+                    resource:mapping.userCenter,
+                    user:user,
+                    articles:articles,
+                    replies:replies,
+                    attention:attention
+                })
+            })
+        })
+    })
 }
 //发布问题列表
 exports.questions = (req,res,next)=>{
@@ -109,6 +149,73 @@ exports.questions = (req,res,next)=>{
 //回复问题列表
 exports.replys = (req,res,next)=>{
 
+}
+
+//人与人之间的关注
+exports.userAttention = (req,res,next)=>{
+    let number = req.query.number;
+    let username = req.query.user_id;
+    // console.log(username);
+    // console.log(number);
+    User.getUserByNameEacheother(username,(err,user)=>{
+        if(err){
+            res.end(err);
+        }
+        // console.log(user);
+        // console.log(user.eachother);
+        // console.log(user);
+        if(req.session.user.name == username){
+            res.end('自己不能关注自己或取消关注')
+        }else {
+            user.eachother.follow_id.push(req.session.user.name);
+            user.eachother.save();
+            // console.log(user.eachother.follow_id);
+            let  sessionusername = req.session.user.name;
+            User.getUserByNameEacheother(sessionusername,(err,sessionuser)=>{
+                    sessionuser.eachother.following_id.push(user.name);
+                    sessionuser.eachother.save().then(result=>{
+                        // console.log(result.following_id)
+                        res.json({num:user.eachother.follow_id.length});
+                    })
+            })
+        }
+    })
+}
+exports.userRemoveAttention = (req,res,next)=>{
+    let number = req.query.number;
+    let username = req.query.user_id;
+    // console.log(username);
+    // console.log(number);
+    User.getUserByNameEacheother(username,(err,user)=>{
+        if(err){
+            res.end(err);
+        }
+        // console.log(user);
+        // console.log(user.eachother);
+        // console.log(user);
+        if(req.session.user.name == username){
+            res.end('自己不能关注自己或取消关注')
+        }else {
+            user.eachother.follow_id.pop(req.session.user.name);
+            user.eachother.save();
+            // console.log(user.eachother.follow_id);
+            let  sessionusername = req.session.user.name;
+            User.getUserByNameEacheother(sessionusername,(err,sessionuser)=>{
+                Array.prototype.removeByValue = function(val) {
+                    for(var i=0; i<this.length; i++) {
+                        if(this[i] == val) {
+                            this.splice(i, 1);
+                            break;
+                        }
+                    }
+                }
+                sessionuser.eachother.following_id.removeByValue(user.name);
+                sessionuser.eachother.save().then(result=>{
+                    res.json({num:user.eachother.follow_id.length});
+                })
+            })
+        }
+    })
 }
 
 
